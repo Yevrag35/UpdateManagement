@@ -3,12 +3,10 @@ using System.Collections.Generic;
 
 namespace MG.UpdateManagement.Objects
 {
-    public interface IUMCollection : IEnumerable<IUMObject>
+    public interface IUMCollection
     {
         int Count { get; }
-        object this[int i] { get; set; }
+        object this[int i] { get; }
         object this[string key] { get; }
-
-        IUMObject Cast(object o);
     }
 }

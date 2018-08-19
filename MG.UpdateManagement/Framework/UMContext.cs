@@ -1,4 +1,5 @@
-﻿using Microsoft.UpdateServices.Internal.BaseApi;
+﻿using MG.UpdateManagement.Objects;
+using Microsoft.UpdateServices.Internal.BaseApi;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ namespace MG.UpdateManagement.Framework
     public static class UMContext
     {
         public static UpdateServer Context { get; set; }
+
+        public static UMUpdateCollection AllUpdates { get; set; }
 
         #region Static Methods
         public static bool IsSet => Context != null;

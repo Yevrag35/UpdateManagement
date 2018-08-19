@@ -2,7 +2,7 @@
 
 namespace MG.UpdateManagement.Objects
 {
-    public interface IUMObject : IEquatable<IUMObject>
+    public interface IUMObject
     {
         Guid ObjectId { get; }
         string ObjectName { get; }

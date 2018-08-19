@@ -8,70 +8,63 @@ using System.Linq;
 
 namespace MG.UpdateManagement.Objects
 {
-    public sealed class UMUpdateCollection : UpdateCollection, IUMCollection, IEnumerable<IUpdate>, IEquatable<UMUpdateCollection>
+    public sealed class UMUpdateCollection : IList<UMUpdate>, IUMCollection
     {
+        private readonly List<UMUpdate> _list;
+        private readonly Type[] AcceptedTypes = new Type[2] { typeof(UMUpdate), typeof(Update) };
+
+        public int Count => _list.Count;
+
+        public object SyncRoot => throw new NotImplementedException();
+
+        public bool IsSynchronized => false;
+
+        public bool IsReadOnly => false;
+
+        public bool IsFixedSize => false;
+
+        UMUpdate IList<UMUpdate>.this[int index] { get => _list[index]; set => _list[index] = value; }
+        public object this[int index]
+        {
+            get => _list.ElementAt(index);
+            set => _list[index] = (UMUpdate)value;
+        }
 
         #region Constructors
-        public UMUpdateCollection()
-            : base()
-        {
-        }
+        public UMUpdateCollection() => _list = new List<UMUpdate>();
+        object IUMCollection.this[int i] => 
+            _list.ElementAt(i);
 
-        
-        object IUMCollection.this[int i]
-        {
-            get => (IUMObject)base[i];
-            set => this[i] = (IUpdate)value;
-        }
-        public object this[string key]
-        {
-            get
-            {
-                var col = this as IEnumerable<IUMObject>;
-                return col.Single(x => x.ObjectName == key);
-            }
-        }
-
-        //public bool Equals(IUMCollection other) =>
-        //    Equals((UMUpdateCollection)other);
-
-        public bool Equals(UMUpdateCollection other)
-        {
-            var ceq = new UMUpdateColEquality();
-            return ceq.Equals(this, other) ? true : false;
-        }
+        public object this[string key] => 
+            _list.Single(x => x.ObjectName == key);
 
         #endregion
 
-        public IUMObject Cast(object o)
+        public static implicit operator UMUpdateCollection(UpdateCollection upCol)
         {
-            var u = (IUpdate)o;
-            var umu = new UMUpdate(u);
-            return umu;
+            var col = new UMUpdateCollection();
+            for (int i = 0; i < upCol.Count; i++)
+            {
+                col.Add((Update)upCol[i]);
+            }
+            return col;
         }
-
 
         #region IEnumerable<IUpdate>
-        IEnumerator<IUpdate> IEnumerable<IUpdate>.GetEnumerator()
-        {
-            var list = new IUpdate[Count];
-            for (int i = 0; i < Count; i++)
-            {
-                list[i] = this[i];
-            }
-            return list.ToList() as IEnumerator<IUpdate>;
-        }
+        IEnumerator<UMUpdate> IEnumerable<UMUpdate>.GetEnumerator() => _list.GetEnumerator();
 
-        IEnumerator<IUMObject> IEnumerable<IUMObject>.GetEnumerator()
-        {
-            var list = new List<IUMObject>();
-            for (int i = 0; i < Count; i++)
-            {
-                IUMObject o = this[i].GetType() == typeof(UMUpdate) ? (IUMObject)this[i] : Cast(this[i]);
-                list.Add(o);
-            }
-            return list.GetEnumerator();
-        }
+        #endregion
+
+        #region IList<UMUpdate> Methods
+        public IEnumerator GetEnumerator() => _list.GetEnumerator();
+        public void RemoveAt(int index) => _list.RemoveAt(index);
+        public int IndexOf(UMUpdate item) => _list.IndexOf(item);
+        public void Insert(int index, UMUpdate item) => _list.Insert(index, item);
+        public void Add(UMUpdate item) => _list.Add(item);
+        public bool Contains(UMUpdate item) => _list.Contains(item);
+        public void CopyTo(UMUpdate[] array, int arrayIndex) => _list.CopyTo(array, arrayIndex);
+        public bool Remove(UMUpdate item) => _list.Remove(item);
+        public void Clear() => _list.Clear();
 
         #endregion
     }

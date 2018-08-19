@@ -1,5 +1,6 @@
 ﻿using MG.UpdateManagement.Exceptions;
 using MG.UpdateManagement.Framework;
+using MG.UpdateManagement.Objects;
 using Microsoft.UpdateServices.Administration;
 using Microsoft.UpdateServices.Internal.BaseApi;
 using System;
@@ -105,6 +106,10 @@ namespace MG.UpdateManagement.Cmdlets
                     throw new WebException(e.Message, e);
                 }
                 UMContext.Context = (UpdateServer)umSrv;
+            }
+            if (_pre)
+            {
+                UMContext.AllUpdates = UMContext.Context.GetUpdates();
             }
         }
 

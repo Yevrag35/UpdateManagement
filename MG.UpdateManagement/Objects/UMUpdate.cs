@@ -13,6 +13,12 @@ namespace MG.UpdateManagement.Objects
     {
         private readonly IUpdate _up;
 
+        public static implicit operator UMUpdate(Update u)
+        {
+            IUpdate iu = u;
+            return new UMUpdate(iu);
+        }
+
         public UMUpdate(IUpdate update) => _up = update;
         public UMUpdate(Update update) => _up = update;
 
@@ -27,9 +33,6 @@ namespace MG.UpdateManagement.Objects
             var ieq = new UMEquality();
             return ieq.Equals(this, up) ? true : false;
         }
-
-        public bool Equals(IUMObject o) =>
-            Equals((UMUpdate)o);
 
         public string Title => _up.Title;
 
