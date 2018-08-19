@@ -1,0 +1,147 @@
+﻿using Microsoft.UpdateServices.Administration;
+using Microsoft.UpdateServices.Internal.BaseApi;
+using MG.UpdateManagement.Framework;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+
+namespace MG.UpdateManagement.Objects
+{
+    public sealed class UMUpdate : IUpdate, IUMObject, IEquatable<UMUpdate>
+    {
+        private readonly IUpdate _up;
+
+        public UMUpdate(IUpdate update) => _up = update;
+        public UMUpdate(Update update) => _up = update;
+
+        public UpdateRevisionId Id => _up.Id;
+
+        public Guid ObjectId => _up.Id.UpdateId;
+
+        public string ObjectName => Title;
+
+        public bool Equals(UMUpdate up)
+        {
+            var ieq = new UMEquality();
+            return ieq.Equals(this, up) ? true : false;
+        }
+
+        public bool Equals(IUMObject o) =>
+            Equals((UMUpdate)o);
+
+        public string Title => _up.Title;
+
+        public string Description => _up.Description;
+
+        public string LegacyName => _up.LegacyName;
+
+        public MsrcSeverity MsrcSeverity => _up.MsrcSeverity;
+
+        public dynamic KBArticles
+        {
+            get
+            {
+                dynamic strs = null;
+                if (_up.KnowledgebaseArticles != null && _up.KnowledgebaseArticles.Count == 1)
+                {
+                    strs = _up.KnowledgebaseArticles[0];
+                }
+                else if (_up.KnowledgebaseArticles != null && _up.KnowledgebaseArticles.Count > 1)
+                {
+                    strs = new string[_up.KnowledgebaseArticles.Count];
+                    for (int i = 0; i < _up.KnowledgebaseArticles.Count; i++)
+                    {
+                        strs[i] = _up.KnowledgebaseArticles[i];
+                    }
+                }
+                return strs;
+            }
+        }
+
+        public StringCollection KnowledgebaseArticles => null;
+
+        public StringCollection SecurityBulletins => _up.SecurityBulletins;
+
+        public StringCollection AdditionalInformationUrls => _up.AdditionalInformationUrls;
+
+        public string UpdateClassificationTitle => _up.UpdateClassificationTitle;
+
+        public StringCollection CompanyTitles => _up.CompanyTitles;
+
+        public StringCollection ProductTitles => _up.ProductTitles;
+
+        public StringCollection ProductFamilyTitles => _up.ProductFamilyTitles;
+
+        public DateTime CreationDate => _up.CreationDate;
+
+        public DateTime ArrivalDate => _up.ArrivalDate;
+
+        public UpdateType UpdateType => _up.UpdateType;
+
+        public PublicationState PublicationState => _up.PublicationState;
+
+        public InstallationBehavior InstallationBehavior => _up.InstallationBehavior;
+
+        public InstallationBehavior UninstallationBehavior => _up.UninstallationBehavior;
+
+        public bool IsApproved => _up.IsApproved;
+
+        public bool IsDeclined => _up.IsDeclined;
+
+        public bool HasStaleUpdateApprovals => _up.HasStaleUpdateApprovals;
+
+        public bool IsLatestRevision => _up.IsLatestRevision;
+
+        public bool HasEarlierRevision => _up.HasEarlierRevision;
+
+        public UpdateState State => _up.State;
+
+        public bool HasLicenseAgreement => _up.HasLicenseAgreement;
+
+        public bool RequiresLicenseAgreementAcceptance => _up.RequiresLicenseAgreementAcceptance;
+
+        public bool HasSupersededUpdates => _up.HasSupersededUpdates;
+
+        public bool IsSuperseded => _up.IsSuperseded;
+
+        public bool IsWsusInfrastructureUpdate => _up.IsWsusInfrastructureUpdate;
+
+        public bool IsEditable => _up.IsEditable;
+
+        public UpdateSource UpdateSource => _up.UpdateSource;
+
+        public void AcceptLicenseAgreement() => _up.AcceptLicenseAgreement();
+        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup) => _up.Approve(action, targetGroup);
+        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup, DateTime deadline) => _up.Approve(action, targetGroup, deadline);
+        public IUpdateApproval ApproveForOptionalInstall(IComputerTargetGroup targetGroup) => _up.ApproveForOptionalInstall(targetGroup);
+        public void CancelDownload() => _up.CancelDownload();
+        public void Decline() => _up.Decline();
+        public void ExpirePackage() => _up.ExpirePackage();
+        public void ExportPackageMetadata(string fileName) => _up.ExportPackageMetadata(fileName);
+        public RevisionChanges GetChangesFromPreviousRevision() => _up.GetChangesFromPreviousRevision();
+        public ReadOnlyCollection<IInstallableItem> GetInstallableItems() => _up.GetInstallableItems();
+        public ILicenseAgreement GetLicenseAgreement() => _up.GetLicenseAgreement();
+        public UpdateCollection GetRelatedUpdates(UpdateRelationship relationship) => _up.GetRelatedUpdates(relationship);
+        public IUpdateSummary GetSummary(ComputerTargetScope computersToInclude) => _up.GetSummary(computersToInclude);
+        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup) => _up.GetSummaryForComputerTargetGroup(targetGroup);
+        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup, bool includeSubgroups) => _up.GetSummaryForComputerTargetGroup(targetGroup, includeSubgroups);
+        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup() => _up.GetSummaryPerComputerTargetGroup();
+        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup(bool includeSubgroups) => _up.GetSummaryPerComputerTargetGroup(includeSubgroups);
+        public StringCollection GetSupportedUpdateLanguages() => _up.GetSupportedUpdateLanguages();
+        public UpdateApprovalCollection GetUpdateApprovals() => _up.GetUpdateApprovals();
+        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup) => _up.GetUpdateApprovals(targetGroup);
+        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup, UpdateApprovalAction approvalAction, DateTime fromApprovalDate, DateTime toApprovalDate) => _up.GetUpdateApprovals(targetGroup, approvalAction, fromApprovalDate, toApprovalDate);
+        public UpdateCategoryCollection GetUpdateCategories() => _up.GetUpdateCategories();
+        public IUpdateClassification GetUpdateClassification() => _up.GetUpdateClassification();
+        public UpdateEventCollection GetUpdateEventHistory(DateTime fromDate, DateTime toDate) => _up.GetUpdateEventHistory(fromDate, toDate);
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup) => _up.GetUpdateInstallationInfoPerComputerTarget(targetGroup);
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup, bool includeSubgroups) => _up.GetUpdateInstallationInfoPerComputerTarget(targetGroup, includeSubgroups);
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(ComputerTargetScope computersToInclude) => _up.GetUpdateInstallationInfoPerComputerTarget(computersToInclude);
+        public void PurgeAssociatedReportingEvents(DateTime fromDate, DateTime toDate) => _up.PurgeAssociatedReportingEvents(fromDate, toDate);
+        public void Refresh() => _up.Refresh();
+        public void RefreshUpdateApprovals() => _up.RefreshUpdateApprovals();
+        public void ResumeDownload() => _up.ResumeDownload();
+    }
+}

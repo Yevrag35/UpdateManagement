@@ -54,14 +54,32 @@
       <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.ClientServicing.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.UpdateServices.Utils, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.Utils.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmdlets\ConnectUMServer.cs" />
+    <Compile Include="Exceptions\UMExceptions.cs" />
+    <Compile Include="Framework\UMEquality.cs" />
+    <Compile Include="Objects\IUMCollection.cs" />
+    <Compile Include="Objects\IUMObject.cs" />
+    <Compile Include="Framework\ReadableRow.cs" />
+    <Compile Include="Framework\UMContext.cs" />
+    <Compile Include="Objects\UMUpdate.cs" />
+    <Compile Include="Objects\UMUpdateCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
