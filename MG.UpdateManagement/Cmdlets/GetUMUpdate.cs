@@ -16,14 +16,32 @@ namespace MG.UpdateManagement.Cmdlets
     public class GetUMUpdate : BaseGetCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
-        public UMProducts? Product { get; set; }
+        public UMProducts[] Product { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool IsSuperseded = false;
+
+        [Parameter(Mandatory = false)]
+        public bool IsApproved = true;
+
+        [Parameter(Mandatory = false)]
+        public bool IsDeclined = false;
 
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
-            if (Product.HasValue)
+
+            if (Product != null)
             {
-                
+                var ups = new List<UMUpdate>();
+                var prods = new string[Product.Length];
+                for (int i = 0; i < Product.Length; i++)
+                {
+                    var p = Product[i];
+                    var tempList = WittleDown(p, IsSuperseded, IsApproved, IsDeclined).ToArray();
+                    ups.AddRange(tempList);
+                }
+                WriteObject(ups.ToArray(), true);
             }
             else
             {

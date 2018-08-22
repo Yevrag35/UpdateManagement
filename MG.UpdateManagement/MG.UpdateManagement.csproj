@@ -69,6 +69,7 @@
     <Compile Include="Cmdlets\BaseCmdlet.cs" />
     <Compile Include="Cmdlets\ConnectUMServer.cs" />
     <Compile Include="Cmdlets\GetUMUpdate.cs" />
+    <Compile Include="Cmdlets\ProductFiltering.cs" />
     <Compile Include="Enumerations\AttributeResolver.cs" />
     <Compile Include="Enumerations\Attributes.cs" />
     <Compile Include="Enumerations\Products.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Objects\IUMCollection.cs" />
     <Compile Include="Objects\IUMObject.cs" />
     <Compile Include="Framework\UMContext.cs" />
+    <Compile Include="Objects\UMQuery.cs" />
     <Compile Include="Objects\UMUpdate.cs" />
     <Compile Include="Objects\UMUpdateCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

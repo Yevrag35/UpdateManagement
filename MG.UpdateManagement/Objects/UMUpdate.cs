@@ -6,6 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Reflection;
+using MG.UpdateManagement.Cmdlets;
 
 namespace MG.UpdateManagement.Objects
 {
@@ -63,6 +66,8 @@ namespace MG.UpdateManagement.Objects
             }
         }
 
+        public string[] Products => _up.ProductTitles.Cast<string>().ToArray();
+
         public StringCollection KnowledgebaseArticles => null;
 
         public StringCollection SecurityBulletins => _up.SecurityBulletins;
@@ -73,7 +78,7 @@ namespace MG.UpdateManagement.Objects
 
         public StringCollection CompanyTitles => _up.CompanyTitles;
 
-        public StringCollection ProductTitles => _up.ProductTitles;
+        public StringCollection ProductTitles => null;
 
         public StringCollection ProductFamilyTitles => _up.ProductFamilyTitles;
 
@@ -146,5 +151,32 @@ namespace MG.UpdateManagement.Objects
         public void Refresh() => _up.Refresh();
         public void RefreshUpdateApprovals() => _up.RefreshUpdateApprovals();
         public void ResumeDownload() => _up.ResumeDownload();
+
+
+        #region Cool Functions
+        public bool IsMatchInfo(UMProductInfo info)
+        {
+            Type t = GetType();
+            var allTruths = new Collection<bool>
+            {
+                Products.Contains(info.BaseProduct)
+            };
+            if (!info.BaseProduct.Contains("Office"))
+            {
+                allTruths.Add(Title.IndexOf(info.Name, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            foreach (string s in info.Is)
+            {
+                if (info.IsSet(s))
+                {
+                    object getProp = t.InvokeMember(s, BindingFlags.GetProperty, null, this, null);
+                    allTruths.Add(getProp.Equals(info.LookingFor[s].Value));
+                }
+            }
+
+            return !allTruths.Contains(false);
+        }
+
+        #endregion
     }
 }
