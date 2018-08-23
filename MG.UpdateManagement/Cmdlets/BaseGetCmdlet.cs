@@ -15,19 +15,6 @@ namespace MG.UpdateManagement.Cmdlets
 {
     public abstract partial class BaseGetCmdlet : BaseCmdlet
     {
-        public List<UMUpdate> GetProductUpdates(string[] prodsToMatch)
-        {
-            var allUpdates = UMContext.AllUpdates;
-            var list = new List<UMUpdate>();
-            for (int i = 0; i < prodsToMatch.Length; i++)
-            {
-                var s = prodsToMatch[i];
-                var items = allUpdates.Where(x => x.Products.Contains(s));
-                list.AddRange(items);
-            }
-            return list;
-        }
-
         internal Library _lib;
     }
 }

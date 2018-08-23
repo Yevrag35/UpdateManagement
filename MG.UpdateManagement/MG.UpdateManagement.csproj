@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Cmdlets\BaseCmdlet.cs" />
     <Compile Include="Cmdlets\BaseGetCmdlet.cs" />
+    <Compile Include="Cmdlets\ByKBArticle.cs" />
     <Compile Include="Cmdlets\ConnectUMServer.cs" />
     <Compile Include="Cmdlets\GetUMUpdate.cs" />
     <Compile Include="Cmdlets\ProductFiltering.cs" />
@@ -82,6 +83,8 @@
     <Compile Include="Objects\IUMCollection.cs" />
     <Compile Include="Objects\IUMObject.cs" />
     <Compile Include="Framework\UMContext.cs" />
+    <Compile Include="Objects\KBQuery.cs" />
+    <Compile Include="Objects\UMProductInfo.cs" />
     <Compile Include="Objects\UMQuery.cs" />
     <Compile Include="Objects\UMUpdate.cs" />
     <Compile Include="Objects\UMUpdateCollection.cs" />

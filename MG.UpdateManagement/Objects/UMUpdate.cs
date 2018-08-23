@@ -196,6 +196,17 @@ namespace MG.UpdateManagement.Objects
             return true;
         }
 
+        public bool MatchesInfo(UMKbQuery query)
+        {
+            var s = (string)KBArticles;
+            return s != query.SearchFor
+                ? false
+                : !string.IsNullOrEmpty(query.Product) && Title.IndexOf(query.Product, StringComparison.OrdinalIgnoreCase) < 0 ||
+                !string.IsNullOrEmpty(query.Arc) && Title.IndexOf(query.Arc, StringComparison.OrdinalIgnoreCase) < 0
+                ? false
+                : true;
+        }
+
         #endregion
     }
 }

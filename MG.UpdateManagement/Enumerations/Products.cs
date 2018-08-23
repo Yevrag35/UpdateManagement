@@ -1,5 +1,4 @@
 ﻿using MG.Attributes;
-using MG.UpdateManagement.Enumerations;
 using System;
 
 namespace MG.UpdateManagement.Enumerations

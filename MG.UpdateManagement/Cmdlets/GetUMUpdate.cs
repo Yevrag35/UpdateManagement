@@ -18,7 +18,7 @@ namespace MG.UpdateManagement.Cmdlets
     [CmdletBinding(PositionalBinding = false)]
     public class GetUMUpdate : BaseGetCmdlet, IDynamicParameters
     {
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = "ByProduct")]
+        [Parameter(Mandatory = false, Position = 0)]
         public UMProducts[] Product { get; set; }
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = "ByKBId")]
@@ -54,13 +54,9 @@ namespace MG.UpdateManagement.Cmdlets
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            if (!string.IsNullOrEmpty(KBArticleId) && KBArticleId.IndexOf("KB", StringComparison.OrdinalIgnoreCase) < 0)
+            if (!string.IsNullOrEmpty(KBArticleId) && KBArticleId.IndexOf("KB", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                KBArticleId = "KB" + KBArticleId;
-            }
-            else if (!string.IsNullOrEmpty(KBArticleId))
-            {
-                KBArticleId = KBArticleId.ToUpper();
+                KBArticleId = KBArticleId.Replace("KB", string.Empty).Replace("kb", string.Empty);
             }
         }
 
@@ -72,7 +68,7 @@ namespace MG.UpdateManagement.Cmdlets
             if (!_all)
             {
                 var ups = new List<UMUpdate>();
-                if (Product != null)
+                if (Product != null && string.IsNullOrEmpty(KBArticleId))
                 {
                     var prods = new string[Product.Length];
                     for (int i = 0; i < Product.Length; i++)
@@ -80,6 +76,25 @@ namespace MG.UpdateManagement.Cmdlets
                         var p = Product[i];
 
                         var tempList = WittleDown(p, arcs, IsSuperseded, IsApproved, IsDeclined).ToArray();
+                        ups.AddRange(tempList);
+                    }
+                }
+                else if (!string.IsNullOrEmpty(KBArticleId))
+                {
+                    string[] prods = null;
+                    if (Product != null)
+                    {
+                        prods = new string[Product.Length];
+                        for (int i = 0; i < Product.Length; i++)
+                        {
+                            var p = Product[i];
+                            var tempList = WittleDown(KBArticleId, p, arcs);
+                            ups.AddRange(tempList);
+                        }
+                    }
+                    else
+                    {
+                        var tempList = WittleDown(KBArticleId, null, arcs);
                         ups.AddRange(tempList);
                     }
                 }
