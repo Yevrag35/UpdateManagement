@@ -1,4 +1,5 @@
-﻿using MG.UpdateManagement.Enumerations;
+﻿using Dynamic;
+using MG.UpdateManagement.Enumerations;
 using MG.UpdateManagement.Exceptions;
 using MG.UpdateManagement.Framework;
 using MG.UpdateManagement.Objects;
@@ -7,39 +8,92 @@ using Microsoft.UpdateServices.Internal.BaseApi;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 
 namespace MG.UpdateManagement.Cmdlets
 {
-    [Cmdlet(VerbsCommon.Get, "UMUpdate", ConfirmImpact = ConfirmImpact.None)]
+    [Cmdlet(VerbsCommon.Get, "UMUpdate", ConfirmImpact = ConfirmImpact.None,
+            DefaultParameterSetName = "ByProduct")]
     [CmdletBinding(PositionalBinding = false)]
-    public class GetUMUpdate : BaseGetCmdlet
+    public class GetUMUpdate : BaseGetCmdlet, IDynamicParameters
     {
-        [Parameter(Mandatory = false, Position = 0)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = "ByProduct")]
         public UMProducts[] Product { get; set; }
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "ByKBId")]
+        public string KBArticleId { get; set; }
+
+        [Parameter(Mandatory = false, ParameterSetName = "ByProduct")]
         public bool IsSuperseded = false;
 
-        [Parameter(Mandatory = false)]
-        public bool IsApproved = true;
+        [Parameter(Mandatory = false, ParameterSetName = "ByProduct")]
+        public bool IsApproved = false;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = "ByProduct")]
         public bool IsDeclined = false;
+
+        private bool _all;
+        [Parameter(Mandatory = true, ParameterSetName = "AllUpdates")]
+        public SwitchParameter All
+        {
+            get => _all;
+            set => _all = value;
+        }
+
+        public object GetDynamicParameters()
+        {
+            if (_lib == null)
+            {
+                _lib = new Library();
+                _lib.AddParameter(new ArchitectureParameter(Product));
+            }
+            return _lib;
+        }
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+            if (!string.IsNullOrEmpty(KBArticleId) && KBArticleId.IndexOf("KB", StringComparison.OrdinalIgnoreCase) < 0)
+            {
+                KBArticleId = "KB" + KBArticleId;
+            }
+            else if (!string.IsNullOrEmpty(KBArticleId))
+            {
+                KBArticleId = KBArticleId.ToUpper();
+            }
+        }
 
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
-
-            if (Product != null)
+            var prm = (ArchitectureParameter)_lib["Architecture"];
+            var arcs = prm.MatchChoiceToEnum((string)prm.Value);
+            if (!_all)
             {
                 var ups = new List<UMUpdate>();
-                var prods = new string[Product.Length];
-                for (int i = 0; i < Product.Length; i++)
+                if (Product != null)
                 {
-                    var p = Product[i];
-                    var tempList = WittleDown(p, IsSuperseded, IsApproved, IsDeclined).ToArray();
-                    ups.AddRange(tempList);
+                    var prods = new string[Product.Length];
+                    for (int i = 0; i < Product.Length; i++)
+                    {
+                        var p = Product[i];
+
+                        var tempList = WittleDown(p, arcs, IsSuperseded, IsApproved, IsDeclined).ToArray();
+                        ups.AddRange(tempList);
+                    }
+                }
+                else
+                {
+                    var info = new UMProductInfo(null, null, IsSuperseded, IsApproved, IsApproved);
+                    for (int i = 0; i < UMContext.AllUpdates.Count; i++)
+                    {
+                        var u = UMContext.AllUpdates[i];
+                        if (u.MatchesInfo(info))
+                        {
+                            ups.Add(u);
+                        }
+                    }
                 }
                 WriteObject(ups.ToArray(), true);
             }

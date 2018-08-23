@@ -22,6 +22,8 @@ namespace MG.UpdateManagement.Objects
             return new UMUpdate(iu);
         }
 
+        #region Inherited Properties
+
         public UMUpdate(IUpdate update) => _up = update;
         public UMUpdate(Update update) => _up = update;
 
@@ -152,29 +154,46 @@ namespace MG.UpdateManagement.Objects
         public void RefreshUpdateApprovals() => _up.RefreshUpdateApprovals();
         public void ResumeDownload() => _up.ResumeDownload();
 
+        #endregion
+
 
         #region Cool Functions
-        public bool IsMatchInfo(UMProductInfo info)
+        public bool MatchesInfo(UMProductInfo info)
         {
             Type t = GetType();
-            var allTruths = new Collection<bool>
-            {
-                Products.Contains(info.BaseProduct)
-            };
-            if (!info.BaseProduct.Contains("Office"))
-            {
-                allTruths.Add(Title.IndexOf(info.Name, StringComparison.OrdinalIgnoreCase) >= 0);
-            }
             foreach (string s in info.Is)
             {
-                if (info.IsSet(s))
+                object getProp = t.InvokeMember(s, BindingFlags.GetProperty, null, this, null);
+                if (!getProp.Equals(info.LookingFor[s]))
                 {
-                    object getProp = t.InvokeMember(s, BindingFlags.GetProperty, null, this, null);
-                    allTruths.Add(getProp.Equals(info.LookingFor[s].Value));
+                    return false;
                 }
             }
-
-            return !allTruths.Contains(false);
+            if (!info.AllProductSearch)
+            {
+                if (!Products.Contains(info.BaseProduct))
+                {
+                    return false;
+                }
+                if (!info.BaseProduct.Contains("Office"))
+                {
+                    if (Title.IndexOf(info.Name, StringComparison.OrdinalIgnoreCase) < 0 || 
+                        (!string.IsNullOrEmpty(info.DesiredPlats) && Title.IndexOf(info.DesiredPlats, StringComparison.Ordinal) < 0) ||
+                        (info.MutuallyExclusiveTo.Length > 0 && info.MutuallyExclusiveTo.Any(Title.Contains)))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (Title.IndexOf(info.Name, StringComparison.OrdinalIgnoreCase) < 0 ||
+                        (!string.IsNullOrEmpty(info.DesiredPlats) && Title.IndexOf(info.DesiredPlats, StringComparison.OrdinalIgnoreCase) < 0))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         #endregion

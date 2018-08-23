@@ -24,10 +24,10 @@ namespace MG.UpdateManagement.Objects
         public bool IsFixedSize => false;
 
         UMUpdate IList<UMUpdate>.this[int index] { get => _list[index]; set => _list[index] = value; }
-        public object this[int index]
+        public UMUpdate this[int index]
         {
             get => _list.ElementAt(index);
-            set => _list[index] = (UMUpdate)value;
+            set => _list[index] = value;
         }
 
         #region Constructors

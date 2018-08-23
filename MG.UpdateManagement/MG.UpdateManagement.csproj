@@ -33,7 +33,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dynamic.Parameter">
+    <Reference Include="Dynamic.Parameter, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Dynamic.Parameter.dll</HintPath>
     </Reference>
     <Reference Include="MG.Attributes">
@@ -67,13 +68,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmdlets\BaseCmdlet.cs" />
+    <Compile Include="Cmdlets\BaseGetCmdlet.cs" />
     <Compile Include="Cmdlets\ConnectUMServer.cs" />
     <Compile Include="Cmdlets\GetUMUpdate.cs" />
     <Compile Include="Cmdlets\ProductFiltering.cs" />
+    <Compile Include="Enumerations\Architectures.cs" />
     <Compile Include="Enumerations\AttributeResolver.cs" />
     <Compile Include="Enumerations\Attributes.cs" />
     <Compile Include="Enumerations\Products.cs" />
     <Compile Include="Exceptions\UMExceptions.cs" />
+    <Compile Include="Framework\ArchitectureParameter.cs" />
     <Compile Include="Framework\UMEquality.cs" />
     <Compile Include="Objects\IUMCollection.cs" />
     <Compile Include="Objects\IUMObject.cs" />

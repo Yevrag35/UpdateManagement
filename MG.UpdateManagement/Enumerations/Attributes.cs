@@ -6,7 +6,7 @@ namespace MG.UpdateManagement.Enumerations
 {
     public class AllowedPlatformsAttribute : MGAbstractAttribute
     {
-        public AllowedPlatformsAttribute(string[] arcs)
+        public AllowedPlatformsAttribute(Architectures[] arcs)
             : base(arcs)
         {
         }
@@ -36,9 +36,9 @@ namespace MG.UpdateManagement.Enumerations
         }
     }
 
-    public class FutureReleasesAttribute : MGAbstractAttribute
+    public class MutuallyExclusiveToAttribute : MGAbstractAttribute
     {
-        public FutureReleasesAttribute(string[] releases)
+        public MutuallyExclusiveToAttribute(string[] releases)
             : base(releases)
         {
         }

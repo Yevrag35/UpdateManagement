@@ -16,14 +16,14 @@ namespace MG.UpdateManagement.Cmdlets
 {
     public abstract partial class BaseGetCmdlet : BaseCmdlet
     {
-        public List<UMUpdate> WittleDown(UMProducts prod, bool? super = null, bool? appr = null, bool? decline = null)
+        public List<UMUpdate> WittleDown(UMProducts prod, Architectures? arcs, bool super, bool appr, bool decline)
         {
             var list = new List<UMUpdate>();
-            var info = new UMProductInfo(prod, super, appr, decline);
+            var info = new UMProductInfo(prod, arcs, super, appr, decline);
             for (int i = 0; i < UMContext.AllUpdates.Count; i++)
             {
-                var up = (UMUpdate)UMContext.AllUpdates[i];
-                if (up.IsMatchInfo(info))
+                var up = UMContext.AllUpdates[i];
+                if (up.MatchesInfo(info))
                 {
                     list.Add(up);
                 }
@@ -38,15 +38,15 @@ namespace MG.UpdateManagement.Cmdlets
         private string _name;
         private string _id;
         private string _base;
-        private object[] _ap;
-        private object[] _fr;
+        private string[] _ap;
+        private string[] _fr;
         private string _cat;
-        private UMProducts _pr;
+        private UMProducts? _pr;
 
         #endregion
 
         #region Public Properties
-        public UMProducts Product
+        public UMProducts? Product
         {
             get => _pr;
             set
@@ -58,36 +58,38 @@ namespace MG.UpdateManagement.Cmdlets
         public string Name => _name;
         public string Id => _id;
         public string BaseProduct => _base;
-        public object[] AllowedPlatforms => _ap;
-        public object[] FutureReleases => _fr;
+        public string[] AllowedPlatforms => _ap;
+        public string[] MutuallyExclusiveTo => _fr;
         public string Category => _cat;
+        public bool AllProductSearch => !_pr.HasValue;
 
-        public Dictionary<string, bool?> LookingFor { get; set; }
-        internal bool IsSet(string s) => LookingFor[s].HasValue;
+        public string DesiredPlats { get; set; }
 
-        public readonly string[] Is = new string[3] { "IsSuperseded", "IsApproved", "IsDeclined" };
+        public Dictionary<string, bool> LookingFor { get; set; }
+
+        internal readonly string[] Is = new string[3] { "IsSuperseded", "IsApproved", "IsDeclined" };
 
         #endregion
 
         #region Constructors
         public UMProductInfo() { }
-        public UMProductInfo(UMProducts prod, bool? super = null, bool? appr = null, bool? decline = null)
+        public UMProductInfo(UMProducts? prod, Architectures? arcs, bool super, bool appr, bool decline)
         {
-            _pr = prod;
-            GetUMProductAttributes();
-            LookingFor = new Dictionary<string, bool?>();
-            if (super.HasValue)
+            if (prod.HasValue || arcs.HasValue)
             {
-                LookingFor.Add("IsSuperseded", super.Value);
+                _pr = prod;
+                GetUMProductAttributes();
             }
-            if (appr.HasValue)
+            if (arcs.HasValue)
             {
-                LookingFor.Add("IsApproved", appr.Value);
+                DesiredPlats = GetAttributeName(arcs.Value);
             }
-            if (decline.HasValue)
+            LookingFor = new Dictionary<string, bool>()
             {
-                LookingFor.Add("IsDeclined", decline.Value);
-            }
+                { "IsSuperseded", super },
+                { "IsApproved", appr },
+                { "IsDeclined", decline }
+            };
         }
 
         #endregion
@@ -98,14 +100,20 @@ namespace MG.UpdateManagement.Cmdlets
             _name = GetAttributeName(_pr);
             _id = (string)GetAttributeValue<IDAttribute>(_pr);
             _base = (string)GetAttributeValue<BaseAttribute>(_pr);
-            _ap = GetAttributeValues<AllowedPlatformsAttribute>(_pr);
-            try
+
+            var ap = GetAttributeValues<AllowedPlatformsAttribute>(_pr);
+            _ap = new string[ap.Length];
+            for (int i1 = 0; i1 < ap.Length; i1++)
             {
-                _fr = GetAttributeValues<FutureReleasesAttribute>(_pr);
+                var a = (Architectures)ap[i1];
+                _ap[i1] = GetAttributeName(a);
             }
-            catch
+
+            var fr = GetAttributeValues<MutuallyExclusiveToAttribute>(_pr);
+            _fr = new string[fr.Length];
+            for (int i2 = 0; i2 < fr.Length; i2++)
             {
-                _fr = null;
+                _fr[i2] = (string)fr[i2];
             }
             
             _cat = (string)GetAttributeValue<CategoryAttribute>(_pr);
