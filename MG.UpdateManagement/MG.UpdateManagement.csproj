@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cmdlets\ApproveUMUpdate.cs" />
     <Compile Include="Cmdlets\BaseCmdlet.cs" />
     <Compile Include="Cmdlets\BaseGetCmdlet.cs" />
     <Compile Include="Cmdlets\ByKBArticle.cs" />
@@ -92,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assemblies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Framework\TargetGroupParameter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,6 +16,7 @@ namespace MG.UpdateManagement.Cmdlets
     [Cmdlet(VerbsCommon.Get, "UMUpdate", ConfirmImpact = ConfirmImpact.None,
             DefaultParameterSetName = "ByProduct")]
     [CmdletBinding(PositionalBinding = false)]
+    [OutputType(typeof(UMUpdate))]
     public class GetUMUpdate : BaseGetCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = false, Position = 0)]
@@ -41,9 +42,9 @@ namespace MG.UpdateManagement.Cmdlets
             set => _all = value;
         }
 
-        public object GetDynamicParameters()
+        public override object GetDynamicParameters()
         {
-            if (_lib == null)
+            if (Product != null && _lib == null)
             {
                 _lib = new Library();
                 _lib.AddParameter(new ArchitectureParameter(Product));
@@ -54,10 +55,7 @@ namespace MG.UpdateManagement.Cmdlets
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            if (!string.IsNullOrEmpty(KBArticleId) && KBArticleId.IndexOf("KB", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                KBArticleId = KBArticleId.Replace("KB", string.Empty).Replace("kb", string.Empty);
-            }
+            KBArticleId = FormatKBString(KBArticleId);
         }
 
         protected override void ProcessRecord()
@@ -67,50 +65,18 @@ namespace MG.UpdateManagement.Cmdlets
             var arcs = prm.MatchChoiceToEnum((string)prm.Value);
             if (!_all)
             {
-                var ups = new List<UMUpdate>();
                 if (Product != null && string.IsNullOrEmpty(KBArticleId))
                 {
-                    var prods = new string[Product.Length];
-                    for (int i = 0; i < Product.Length; i++)
-                    {
-                        var p = Product[i];
-
-                        var tempList = WittleDown(p, arcs, IsSuperseded, IsApproved, IsDeclined).ToArray();
-                        ups.AddRange(tempList);
-                    }
+                    FilterUpdates(Product, arcs, IsSuperseded, IsApproved, IsDeclined);
                 }
                 else if (!string.IsNullOrEmpty(KBArticleId))
                 {
-                    string[] prods = null;
-                    if (Product != null)
-                    {
-                        prods = new string[Product.Length];
-                        for (int i = 0; i < Product.Length; i++)
-                        {
-                            var p = Product[i];
-                            var tempList = WittleDown(KBArticleId, p, arcs);
-                            ups.AddRange(tempList);
-                        }
-                    }
-                    else
-                    {
-                        var tempList = WittleDown(KBArticleId, null, arcs);
-                        ups.AddRange(tempList);
-                    }
+                    FilterUpdates(Product, arcs, KBArticleId);
                 }
                 else
                 {
-                    var info = new UMProductInfo(null, null, IsSuperseded, IsApproved, IsApproved);
-                    for (int i = 0; i < UMContext.AllUpdates.Count; i++)
-                    {
-                        var u = UMContext.AllUpdates[i];
-                        if (u.MatchesInfo(info))
-                        {
-                            ups.Add(u);
-                        }
-                    }
+                    FilterUpdates(IsSuperseded, IsApproved, IsDeclined);
                 }
-                WriteObject(ups.ToArray(), true);
             }
             else
             {
