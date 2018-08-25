@@ -25,7 +25,7 @@ namespace MG.UpdateManagement.Framework
             { "Position", 0 }
         };
 
-        internal static ComputerTargetGroupCollection ctgCol;
+        internal UMComputerGroupCollection ctgCol => UMContext.AllComputerGroups;
 
         public override bool AllowNull { get; set; }
         public override bool AllowEmptyCollection { get; set; }
@@ -38,7 +38,7 @@ namespace MG.UpdateManagement.Framework
         {
             if (ctgCol == null)
             {
-                ctgCol = UMContext.Context.GetComputerTargetGroups();
+                UMContext.AllComputerGroups = UMContext.Context.GetComputerTargetGroups();
             }
             var arr = new string[ctgCol.Count];
 			for (int i = 0; i < ctgCol.Count; i++)
@@ -58,13 +58,14 @@ namespace MG.UpdateManagement.Framework
 
 		internal static IComputerTargetGroup GroupFromTheName(string name)
         {
-            if (ctgCol == null)
+            var col = UMContext.AllComputerGroups;
+            if (col == null)
             {
-                ctgCol = UMContext.Context.GetComputerTargetGroups();
+                col = UMContext.Context.GetComputerTargetGroups();
             }
-            for (int i = 0; i < ctgCol.Count; i++)
+            for (int i = 0; i < col.Count; i++)
             {
-                var grp = ctgCol[i];
+                var grp = col[i];
 				if (grp.Name == name)
                 {
                     return grp;

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace MG.UpdateManagement.Objects
 {
-    public sealed class UMUpdateCollection : IList<UMUpdate>, IUMCollection
+    public class UMUpdateCollection : IList<UMUpdate>, IUMCollection
     {
         private readonly List<UMUpdate> _list;
         private readonly Type[] AcceptedTypes = new Type[2] { typeof(UMUpdate), typeof(Update) };
@@ -51,6 +51,8 @@ namespace MG.UpdateManagement.Objects
         }
 
         #region IEnumerable<IUpdate>
+        public IEnumerable Enumerate() => _list.ToArray();
+
         IEnumerator<UMUpdate> IEnumerable<UMUpdate>.GetEnumerator() => _list.GetEnumerator();
 
         #endregion

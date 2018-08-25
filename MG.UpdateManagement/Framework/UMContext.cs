@@ -12,6 +12,8 @@ namespace MG.UpdateManagement.Framework
 
         public static UMUpdateCollection AllUpdates { get; set; }
 
+        public static UMComputerGroupCollection AllComputerGroups { get; set; }
+
         #region Static Methods
         public static bool IsSet => Context != null;
 

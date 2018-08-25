@@ -58,11 +58,18 @@ namespace MG.UpdateManagement.Cmdlets
             KBArticleId = FormatKBString(KBArticleId);
         }
 
+
+
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
-            var prm = (ArchitectureParameter)_lib["Architecture"];
-            var arcs = prm.MatchChoiceToEnum((string)prm.Value);
+            ArchitectureParameter prm = null;
+            Architectures? arcs = null;
+            if (_lib != null)
+            {
+                prm = (ArchitectureParameter)_lib["Architecture"];
+                arcs = prm.MatchChoiceToEnum((string)prm.Value);
+            }
             if (!_all)
             {
                 if (Product != null && string.IsNullOrEmpty(KBArticleId))

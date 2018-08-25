@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MG.UpdateManagement.Objects
@@ -8,5 +9,7 @@ namespace MG.UpdateManagement.Objects
         int Count { get; }
         object this[int i] { get; }
         object this[string key] { get; }
+
+        IEnumerable Enumerate();
     }
 }
