@@ -64,7 +64,7 @@ Easy...
 It shall be done...
 `Get-UMUpdate Win1803 KB4343903 x64`
 
-__By default, only updates that don't meet these criteria are pulled__:
+__By default, only updates that meet these criteria are pulled__:
 
 1. Not Superseded
 1. Not Yet Approved
