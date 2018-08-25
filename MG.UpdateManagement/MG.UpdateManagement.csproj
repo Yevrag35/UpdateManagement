@@ -89,6 +89,8 @@
     <Compile Include="Objects\IUMObject.cs" />
     <Compile Include="Framework\UMContext.cs" />
     <Compile Include="Objects\KBQuery.cs" />
+    <Compile Include="Objects\UMCategories.cs" />
+    <Compile Include="Objects\UMClassifications.cs" />
     <Compile Include="Objects\UMComputerGroupCollection.cs" />
     <Compile Include="Objects\UMDownload.cs" />
     <Compile Include="Objects\UMProductInfo.cs" />

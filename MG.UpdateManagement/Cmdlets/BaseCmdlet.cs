@@ -14,6 +14,24 @@ namespace MG.UpdateManagement.Cmdlets
 {
     public abstract class BaseCmdlet : PSCmdlet
     {
-        internal readonly UpdateServer ctx = UMContext.Context;
+        internal UpdateServer ctx = UMContext.Context;
+
+        internal void PopulateRelevantWithUpdates()
+        {
+            UMClassifications classes = UMContext.Context.GetUpdateClassifications();
+            UMCategories categories = UMContext.Context.GetUpdateCategories();
+
+            var upScope = new UpdateScope()
+            {
+                ApprovedStates = ApprovedStates.Any,
+                UpdateSources = UpdateSources.All,
+                IncludedInstallationStates = UpdateInstallationStates.All,
+                UpdateTypes = UpdateTypes.All,
+                UpdateApprovalActions = UpdateApprovalActions.All
+            };
+            upScope.Classifications.AddRange(classes);
+            upScope.Categories.AddRange(categories);
+            UMContext.AllUpdates = UMContext.Context.GetUpdates(upScope);
+        }
     }
 }

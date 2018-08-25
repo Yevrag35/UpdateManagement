@@ -25,7 +25,13 @@
 	RequiredModules = ''
 	FunctionsToExport = ''
 	AliasesToExport = ''
-	CmdletsToExport = @('Approve-UMUpdate', 'Connect-UMServer', 'Decline-UMUpdate', 'Download-UMUpdate', 'Get-UMUpdate')
+	CmdletsToExport = @(
+		'Approve-UMUpdate',
+		'Connect-UMServer',
+		'Decline-UMUpdate',
+		'Download-UMUpdate',
+		'Get-UMUpdate'
+	)
 	FormatsToProcess = @(
 		'MG.UpdateManagement.Objects.UMUpdate.Format.ps1xml',
 		'Microsoft.UpdateServices.Administration.IComputerTarget.Format.ps1xml'

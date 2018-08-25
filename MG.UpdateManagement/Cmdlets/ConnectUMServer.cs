@@ -12,7 +12,7 @@ namespace MG.UpdateManagement.Cmdlets
     [Cmdlet(VerbsCommunications.Connect, "UMServer", SupportsShouldProcess = true)]
     [CmdletBinding(PositionalBinding = false)]
     [Alias("conums")]
-    public class ConnectUMServer : PSCmdlet
+    public class ConnectUMServer : BaseCmdlet
     {
         #region ### My Constants ###
         //private protected const string _myserv = "updates.yevrag35.com";
@@ -45,7 +45,7 @@ namespace MG.UpdateManagement.Cmdlets
         private bool _pre;
         [Parameter(Mandatory = false)]
         [Alias("pre")]
-        public SwitchParameter PreGatherUpdates
+        public SwitchParameter GatherAllUpdates
         {
             get => _pre;
             set => _pre = value;
@@ -108,9 +108,11 @@ namespace MG.UpdateManagement.Cmdlets
                 UMContext.Context = (UpdateServer)umSrv;
             }
             if (_pre)
-            {
                 UMContext.AllUpdates = UMContext.Context.GetUpdates();
-            }
+
+            else
+                PopulateRelevantWithUpdates();
+
         }
 
         #endregion

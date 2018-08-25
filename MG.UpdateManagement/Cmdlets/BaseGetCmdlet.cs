@@ -2,6 +2,7 @@
 using MG.UpdateManagement.Enumerations;
 using MG.UpdateManagement.Framework;
 using MG.UpdateManagement.Objects;
+using Microsoft.UpdateServices.Administration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
