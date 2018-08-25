@@ -104,6 +104,6 @@ Much like _Approve-UMUpdate_, 'decline' will simply decline updates that are pip
 
 ## Download-UMUpdate
 
-Now for a cmdlet that _UpdateServices_ couldn't do (in any easy manner), 'Download' can individually download specific updates to a folder of your chosing.  Because your Wsus server may not have the content already downloaded, the download will be taken from Microsoft's Wsus servers directly.
+Now for a cmdlet that _UpdateServices_ couldn't do (in an easy manner), 'Download' can individually download specific updates to a folder of your chosing.  Because your Wsus server may not have the content already downloaded, the download will be taken from Microsoft's Wsus servers directly.
 
 ![Download-UMUpdate in action](https://images.yevrag35.com/DownloadUMUpdate.gif)
