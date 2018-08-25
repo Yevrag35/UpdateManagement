@@ -4,7 +4,7 @@
     Description = 'This module is designed to be a total revamp of the "UpdateServices" native WSUS PSModule.'
     CompanyName = 'Yevrag35, LLC.'
     Copyright = "© 2018 Yevrag35, LLC.  All rights reserved."
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '0.1.0'
 	RootModule = 'MG.UpdateManagement.dll'
 	RequiredAssemblies = @(
 		'Dynamic.Parameter.dll',
