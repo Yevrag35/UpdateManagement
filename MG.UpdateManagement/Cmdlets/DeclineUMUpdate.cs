@@ -13,9 +13,10 @@ using System.Management.Automation;
 
 namespace MG.UpdateManagement.Cmdlets
 {
-    [Cmdlet(VerbsLifecycle.Deny, "UMUpdate", ConfirmImpact = ConfirmImpact.None)]
+    [Cmdlet("Decline", "UMUpdate", ConfirmImpact = ConfirmImpact.None)]
     [CmdletBinding(PositionalBinding = false)]
-    public class DenyUMUpdate : BaseCmdlet
+    [Alias("deup")]
+    public class DeclineUMUpdate : BaseCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "FromPipeline", ValueFromPipeline = true)]
         public UMUpdate Update { get; set; }

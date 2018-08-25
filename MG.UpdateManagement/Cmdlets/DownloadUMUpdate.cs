@@ -85,9 +85,9 @@ namespace MG.UpdateManagement.Cmdlets
                     }
                     catch
                     {
-                        Console.WriteLine("Download cancelled!");
+                        Thread.Sleep(1000);
                         File.Delete(finalPath);
-                        return;
+                        throw new UMDownloadCancelledException();
                     }
                 }
                 resStream.Close();

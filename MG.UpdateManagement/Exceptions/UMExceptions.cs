@@ -25,6 +25,20 @@ namespace MG.UpdateManagement.Exceptions
         }
     }
 
+    public class UMDownloadCancelledException : OperationCanceledException, IUMException
+    {
+        private protected const string def = "Download cancelled.  Incomplete downloads have been deleted.";
+        public bool IsStaticMessage => true;
+        public bool IsMessageCustomizable => false;
+        public bool IsMessageFormattable => false;
+        public bool InnerExceptionSupportable => false;
+        
+        public UMDownloadCancelledException()
+            : base(def)
+        {
+        }
+    }
+
     public class WsusInErrorException : WebException, IUMException
     {
         private protected const string _mtemp = "{0} is in an error state at port {1}.  Status Code = {2}";

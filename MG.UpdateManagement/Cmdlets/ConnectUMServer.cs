@@ -11,28 +11,28 @@ namespace MG.UpdateManagement.Cmdlets
 {
     [Cmdlet(VerbsCommunications.Connect, "UMServer", SupportsShouldProcess = true)]
     [CmdletBinding(PositionalBinding = false)]
-    [Alias("cums")] // LOL!!!
+    [Alias("conums")]
     public class ConnectUMServer : PSCmdlet
     {
         #region ### My Constants ###
-        private protected const string _myserv = "updates.yevrag35.com";
-        private protected const int _myport = 8531;
+        //private protected const string _myserv = "updates.yevrag35.com";
+        //private protected const int _myport = 8531;
 
         #endregion
 
         #region ### Parameters ###
 
         #region -WsusServerName
-        [Parameter(Mandatory = false, Position = 0)]
+        [Parameter(Mandatory = true, Position = 0)]
         [Alias("Name", "Server", "s", "Wsus")]
-        public string WsusServerName = _myserv;
+        public string WsusServerName { get; set; }
 
         #endregion
 
         #region -PortNumber
-        [Parameter(Mandatory = false, Position = 1)]
+        [Parameter(Mandatory = true, Position = 1)]
         [Alias("p", "Port")]
-        public int PortNumber = _myport;
+        public int PortNumber { get; set; }
 
         #endregion
 
