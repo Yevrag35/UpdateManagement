@@ -40,6 +40,11 @@
     <Reference Include="MG.Attributes">
       <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\MG.Attributes.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.UpdateServices.AdminDataAccessProxy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.AdminDataAccessProxy.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.UpdateServices.Administration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.Administration.dll</HintPath>
@@ -53,6 +58,31 @@
     <Reference Include="Microsoft.UpdateServices.ClientServicing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.ClientServicing.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.UpdateServices.CoreCommon, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.CoreCommon.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.UpdateServices.DBlayer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.DBlayer.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.UpdateServices.StringResources, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.StringResources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.UpdateServices.StringResources.Resources, Version=4.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.StringResources.Resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.UpdateServices.Utils, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

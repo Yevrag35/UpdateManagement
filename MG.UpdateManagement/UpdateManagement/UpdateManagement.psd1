@@ -4,23 +4,20 @@
     Description = 'This module is designed to be a total revamp of the "UpdateServices" native WSUS PSModule.'
     CompanyName = 'Yevrag35, LLC.'
     Copyright = "© 2018 Yevrag35, LLC.  All rights reserved."
-    ModuleVersion = '0.1.0'
+    ModuleVersion = '0.2.0'
 	RootModule = 'MG.UpdateManagement.dll'
 	RequiredAssemblies = @(
 		'Dynamic.Parameter.dll',
-		'MG.Attributes.dll'#,
-		# 'Microsoft.UpdateServices.AdminDataAccessProxy',
-		# 'Microsoft.UpdateServices.Administration',
-		# 'Microsoft.UpdateServices.BaseApi',
-		# 'Microsoft.UpdateServices.ClientServicing',
-		# 'Microsoft.UpdateServices.CoreCommon',
-		# 'Microsoft.UpdateServices.DBlayer',
-		# 'Microsoft.UpdateServices.SMPlugin',
-		# 'Microsoft.UpdateServices.SMPlugin.resources',
-		# 'Microsoft.UpdateServices.StringResources',
-		# 'Microsoft.UpdateServices.StringResources.Resources',
-		# 'Microsoft.UpdateServices.UpdateRegulation',
-		# 'Microsoft.UpdateServices.Utils'
+		'MG.Attributes.dll',
+		'Microsoft.UpdateServices.AdminDataAccessProxy.dll',
+		'Microsoft.UpdateServices.Administration.dll',
+		'Microsoft.UpdateServices.BaseApi.dll',
+		'Microsoft.UpdateServices.ClientServicing.dll',
+		'Microsoft.UpdateServices.CoreCommon.dll',
+		'Microsoft.UpdateServices.DBlayer.dll',
+		'Microsoft.UpdateServices.StringResources.dll',
+		'Microsoft.UpdateServices.StringResources.Resources.dll',
+		'Microsoft.UpdateServices.Utils.dll'
 	)
 	RequiredModules = ''
 	FunctionsToExport = ''
