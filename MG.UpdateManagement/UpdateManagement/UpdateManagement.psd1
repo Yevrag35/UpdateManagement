@@ -29,6 +29,7 @@
 		'Download-UMUpdate',
 		'Get-UMUpdate'
 	)
+	ScriptsToProcess = "UpdateManagement.ps1"
 	FormatsToProcess = @(
 		'MG.UpdateManagement.Objects.UMUpdate.Format.ps1xml',
 		'Microsoft.UpdateServices.Administration.IComputerTarget.Format.ps1xml'
@@ -43,6 +44,7 @@
 		'MG.UpdateManagement.dll',
 		'MG.UpdateManagement.Objects.UMUpdate.Format.ps1xml',
 		'Microsoft.UpdateServices.Administration.IComputerTarget.Format.ps1xml',
+		'UpdateManagement.ps1',
 		'UpdateManagement.psd1'
 	)
 	# Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
