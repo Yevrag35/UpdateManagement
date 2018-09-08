@@ -139,6 +139,7 @@
   <ItemGroup>
     <None Include="UpdateManagement\MG.UpdateManagement.Objects.UMUpdate.Format.ps1xml" />
     <None Include="UpdateManagement\Microsoft.UpdateServices.Administration.IComputerTarget.Format.ps1xml" />
+    <None Include="UpdateManagement\UpdateManagement.ps1" />
     <None Include="UpdateManagement\UpdateManagement.psd1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
