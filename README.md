@@ -1,10 +1,11 @@
 # UpdateManagement (WSUS)
 
-This module is designed to be a total revamp of the "UpdateServices" native WSUS PSModule. However, for now, you still need the native Wsus powershell module installed.
+This module is designed to be a total revamp of the "UpdateServices" native WSUS PSModule.
 
 ## Current Limitations
 
-Right now, it's still necessary to have the '__UpdateServices__' powershell module installed.  The reason being is because it's hardcoded into some of the prerequisite assemblies that they be present in the computer's GAC.
+~~Right now, it's still necessary to have the '__UpdateServices__' powershell module installed.  The reason being is because it's hardcoded into some of the prerequisite assemblies that they be present in the computer's GAC.~~  
+This module no longer requires RSAT to be installed.
 
 Because of the vast quantity of synchronizable product that Wsus caters to, I chose to focus on these products for the initial launch of this:
 
