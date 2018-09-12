@@ -65,13 +65,13 @@
 			# LicenseUri = ''
 
 			# A URL to the main website for this project.
-			# ProjectUri = ''
+			ProjectUri = 'https://github.com/Yevrag35/UpdateManagement'
 
 			# A URL to an icon representing this module.
 			# IconUri = ''
 
 			# ReleaseNotes of this module
-			ReleaseNotes = 'So far only getting, approving, declining, and downloading of updates is supported.  Only the following products are filterable: "Windows 7", "Windows 8.1", "Window 10 1607", "Windows 10 1703", "Windows 10 1709", "Windows 1803", "Server 2008 R2", "Server 2012", "Server 2012 R2", "Server 2016", "Server 1709", "Server 1803", "Office 2010", "Office 2013", and "Office 2016".  This is a work in progress; comment if you would like to see a product included.'
+			ReleaseNotes = 'No longer requires RSATools to be installed in order to run.'
 
 			# External dependent modules of this module
 			ExternalModuleDependencies = 'UpdateServices'
