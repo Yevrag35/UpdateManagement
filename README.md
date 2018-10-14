@@ -4,7 +4,7 @@ This module is designed to be a total revamp of the "UpdateServices" native WSUS
 
 ## Current Limitations
 
-~~Right now, it's still necessary to have the '__UpdateServices__' powershell module installed.  The reason being is because it's hardcoded into some of the prerequisite assemblies that they be present in the computer's GAC.~~  
+~~Right now, it's still necessary to have the '__UpdateServices__' powershell module installed.  The reason being is because it's hardcoded into some of the prerequisite assemblies that they be present in the computer's GAC.~~
 This module no longer requires RSAT to be installed.
 
 Because of the vast quantity of synchronizable product that Wsus caters to, I chose to focus on these products for the initial launch of this:
@@ -12,13 +12,14 @@ Because of the vast quantity of synchronizable product that Wsus caters to, I ch
 1. Windows 7
 1. Windows 8.1
 1. Windows 10
-    - _versions 1607 through 1803_
+    - _versions 1607 through 1809_
 1. Server 2008 R2
 1. Server 2012
 1. Server 2012 R2
 1. Server 2016
 1. Server 2016 1709
 1. Server 2016 1803
+1. Server 2019 (1809)
 
 ...and then for __non-OS__ products, there's:
 
@@ -108,3 +109,11 @@ Much like _Approve-UMUpdate_, 'decline' will simply decline updates that are pip
 Now for a cmdlet that _UpdateServices_ couldn't do (in an easy manner), 'Download' can individually download specific updates to a folder of your chosing.  Because your Wsus server may not have the content already downloaded, the download will be taken from Microsoft's Wsus servers directly.
 
 ![Download-UMUpdate in action](https://images.yevrag35.com/DownloadUMUpdate.gif)
+
+---
+
+## Remove-UMUpdate (Delete-UMUpdate)
+
+This cmdlet simply removes/deletes the specified update's metadata from the Wsus server's database.  Great for removing updates for products that you no longer need synchronized.
+
+`Get-UMUpdate -All | Where { $_.Products -eq "Silverlight" } | Remove-UMUpdate -Force`
