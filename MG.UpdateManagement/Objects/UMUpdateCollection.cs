@@ -11,7 +11,11 @@ namespace MG.UpdateManagement.Objects
     public class UMUpdateCollection : IList<UMUpdate>, IUMCollection
     {
         private readonly List<UMUpdate> _list;
-        private readonly Type[] AcceptedTypes = new Type[2] { typeof(UMUpdate), typeof(Update) };
+        private readonly Type[] AcceptedTypes = new Type[2] 
+        {
+            typeof(UMUpdate),
+            typeof(Update)
+        };
 
         public int Count => _list.Count;
 
@@ -23,12 +27,25 @@ namespace MG.UpdateManagement.Objects
 
         public bool IsFixedSize => false;
 
-        UMUpdate IList<UMUpdate>.this[int index] { get => _list[index]; set => _list[index] = value; }
+        UMUpdate IList<UMUpdate>.this[int index]
+        {
+            get => _list[index];
+            set => _list[index] = value;
+        }
         public UMUpdate this[int index]
         {
             get => _list.ElementAt(index);
             set => _list[index] = value;
         }
+
+        #region Special Remove
+        internal void Delete(UMUpdate ump)
+        {
+            ump.ShowOriginal().UpdateServer.DeleteUpdate(ump.Id.UpdateId);
+            Remove(ump);
+        }
+
+        #endregion
 
         #region Constructors
         public UMUpdateCollection() => _list = new List<UMUpdate>();

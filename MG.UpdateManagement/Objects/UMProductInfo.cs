@@ -1,11 +1,11 @@
-﻿using MG;
+﻿using MG.Attributes;
 using MG.UpdateManagement.Enumerations;
 using System;
 using System.Collections.Generic;
 
 namespace MG.UpdateManagement.Objects
 {
-    public class UMProductInfo : MGNameResolver
+    public class UMProductInfo : AttributeResolver
     {
         #region Private Fields
         private string _name;
@@ -55,7 +55,7 @@ namespace MG.UpdateManagement.Objects
             }
             if (arcs.HasValue)
             {
-                DesiredPlats = GetAttributeName(arcs.Value);
+                DesiredPlats = GetNameAttribute(arcs.Value);
             }
             LookingFor = new Dictionary<string, bool>()
             {
@@ -70,26 +70,29 @@ namespace MG.UpdateManagement.Objects
         #region Methods
         private void GetUMProductAttributes()
         {
-            _name = GetAttributeName(_pr);
-            _id = (string)GetAttributeValue<IDAttribute>(_pr);
-            _base = (string)GetAttributeValue<BaseAttribute>(_pr);
+            _name = GetNameAttribute(_pr);
+            if (_name.Contains("Office"))   // This is done in order to prevent filtering out updates for "Word", "Excel", etc.
+                _name = _name.Replace("Office ", string.Empty);
 
-            var ap = GetAttributeValues<AllowedPlatformsAttribute>(_pr);
+            _id = GetAttributeValue<string>(_pr, typeof(IDAttribute));
+            _base = GetAttributeValue<string>(_pr, typeof(BaseAttribute));
+            
+            var ap = GetAttributeValues<Architectures>(_pr, typeof(AllowedPlatformsAttribute));
             _ap = new string[ap.Length];
             for (int i1 = 0; i1 < ap.Length; i1++)
             {
-                var a = (Architectures)ap[i1];
-                _ap[i1] = GetAttributeName(a);
+                var a = ap[i1];
+                _ap[i1] = GetNameAttribute(a);
             }
-
-            var fr = GetAttributeValues<MutuallyExclusiveToAttribute>(_pr);
+            
+            var fr = GetAttributeValues<string>(_pr, typeof(MutuallyExclusiveToAttribute));
             _fr = new string[fr.Length];
             for (int i2 = 0; i2 < fr.Length; i2++)
             {
-                _fr[i2] = (string)fr[i2];
+                _fr[i2] = fr[i2];
             }
 
-            _cat = (string)GetAttributeValue<CategoryAttribute>(_pr);
+            _cat = GetAttributeValue<string>(_pr, typeof(CategoryAttribute));
         }
 
         #endregion

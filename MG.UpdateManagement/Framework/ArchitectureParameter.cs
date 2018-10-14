@@ -56,7 +56,7 @@ namespace MG.UpdateManagement.Framework
             for (int i = 0; i < enumValues.Length; i++)
             {
                 var arc = (Architectures)enumValues.GetValue(i);
-                strArr.Add(info.GetAttributeName(arc));
+                strArr.Add(info.GetNameAttribute(arc));
             }
             for (int t = 0; t < list.Count; t++)
             {
@@ -87,7 +87,7 @@ namespace MG.UpdateManagement.Framework
                 for (int i = 0; i < enumValues.Length; i++)
                 {
                     var e = (Architectures)enumValues.GetValue(i);
-                    var s = info.GetAttributeName(e);
+                    var s = info.GetNameAttribute(e);
                     if (choice.Equals(s))
                     {
                         return e;

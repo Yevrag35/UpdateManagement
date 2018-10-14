@@ -1,11 +1,11 @@
-﻿using MG;
+﻿using MG.Attributes;
 using MG.UpdateManagement.Enumerations;
 using System;
 using System.Collections.Generic;
 
 namespace MG.UpdateManagement.Objects
 {
-    public class UMKbQuery : MGNameResolver
+    public class UMKbQuery : AttributeResolver
     {
         private readonly string _sf;
         private readonly string _p;
@@ -20,11 +20,11 @@ namespace MG.UpdateManagement.Objects
             _sf = kbText;
             if (prod.HasValue)
             {
-                _p = GetAttributeName(prod.Value);
+                _p = GetNameAttribute(prod.Value);
             }
             if (arc.HasValue)
             {
-                _arc = GetAttributeName(arc.Value);
+                _arc = GetNameAttribute(arc.Value);
             }
         }
     }

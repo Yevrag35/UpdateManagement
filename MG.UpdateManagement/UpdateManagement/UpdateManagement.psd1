@@ -4,7 +4,9 @@
     Description = 'This module is designed to be a total revamp of the "UpdateServices" native WSUS PSModule.'
     CompanyName = 'Yevrag35, LLC.'
     Copyright = "© 2018 Yevrag35, LLC.  All rights reserved."
-    ModuleVersion = '0.1.1'
+    ModuleVersion = '0.2.0'
+	PowerShellVersion = '4.0'
+	ProcessorArchitecture = 'Amd64'
 	RootModule = 'MG.UpdateManagement.dll'
 	RequiredAssemblies = @(
 		'Dynamic.Parameter.dll',
@@ -19,25 +21,24 @@
 		'Microsoft.UpdateServices.StringResources.Resources.dll',
 		'Microsoft.UpdateServices.Utils.dll'
 	)
-	RequiredModules = ''
+	# RequiredModules = ''
 	FunctionsToExport = ''
-	AliasesToExport = ''
+	AliasesToExport = @('appup', 'conums', 'deup', 'downup', 'getup', 'remup', 
+		'Delete-UMUpdate')
 	CmdletsToExport = @(
 		'Approve-UMUpdate',
 		'Connect-UMServer',
 		'Decline-UMUpdate',
 		'Download-UMUpdate',
-		'Get-UMUpdate'
+		'Get-UMUpdate',
+		'Remove-UMUpdate'
 	)
 	ScriptsToProcess = "UpdateManagement.ps1"
 	FormatsToProcess = @(
 		'MG.UpdateManagement.Objects.UMUpdate.Format.ps1xml',
 		'Microsoft.UpdateServices.Administration.IComputerTarget.Format.ps1xml'
 	)
-	VariablesToExport = @(
-		'appup', 'conums',
-		'deup', 'downup', 'getup'
-	)
+	VariablesToExport = ''
 	FileList = @(
 		'Dynamic.Parameter.dll',
 		'MG.Attributes.dll',
@@ -53,13 +54,13 @@
 		PSData = @{
 
 			# Tags applied to this module. These help with module discovery in online galleries.
-			Tags = 'Wsus', 'Update', 'Management', 'Module', 'Windows', 'Server', '10',
-				'8.1', '7', '1607', '1703', '1709', '1803', 'Download', 'Get', 'Approve',
-				'Decline', 'Collection', 'format', 'computer', 'target', 'updateservices',
-				'office', '2010', '2013', '2016', 'architecuture', 'kbarticle', 'id', 'query',
+			Tags = 'Wsus', 'Update', 'Management', 'Module', 'Windows', 'Server', '10', '2019',
+				'8.1', '7', '1607', '1703', '1709', '1803', '1809', 'Download', 'Get', 'Approve',
+				'Decline', 'Collection', 'format', 'computer', 'target', 'updateservices', 'knowledge', 
+				'base', 'office', '2010', '2013', '2016', 'architecuture', 'kbarticle', 'id', 'query',
 				'product', 'info', 'information', 'group', 'context', 'filter', 'progress', 'bar',
 				'equality', 'parameter', 'exception', 'enum', 'attribute', 'pscmdlet', 'connect',
-				'disconnect', 'UM'
+				'disconnect', 'UM', 'remove', 'delete'
 
 			# A URL to the license for this module.
 			# LicenseUri = ''
@@ -71,10 +72,10 @@
 			# IconUri = ''
 
 			# ReleaseNotes of this module
-			ReleaseNotes = 'No longer requires RSATools to be installed in order to run.'
+			ReleaseNotes = 'Added Server 2019 and Windows 10 1809 as valid products.  ''All'' office product updates now display in the results.  New cmdlet for ''deleting'' updates from the Wsus database.  Updates now refresh themselves after taking actions.'
 
 			# External dependent modules of this module
-			ExternalModuleDependencies = 'UpdateServices'
+			# ExternalModuleDependencies = ''
 
 		} # End of PSData hashtable
 

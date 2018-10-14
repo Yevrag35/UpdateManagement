@@ -12,7 +12,7 @@ using MG.UpdateManagement.Cmdlets;
 
 namespace MG.UpdateManagement.Objects
 {
-    public sealed class UMUpdate : IUpdate, IUMObject, IEquatable<UMUpdate>
+    public sealed class UMUpdate : IUpdate, IUMObject, IEquatable<UMUpdate>, IEquatable<Update>
     {
         private readonly IUpdate _up;
 
@@ -21,6 +21,8 @@ namespace MG.UpdateManagement.Objects
             IUpdate iu = u;
             return new UMUpdate(iu);
         }
+        public static explicit operator Update(UMUpdate umup) =>
+            umup.ShowOriginal();
 
         #region Inherited Properties
 
@@ -37,6 +39,12 @@ namespace MG.UpdateManagement.Objects
         {
             var ieq = new UMEquality();
             return ieq.Equals(this, up) ? true : false;
+        }
+
+        public bool Equals(Update other)
+        {
+            var ieq = new UpdateEquality();
+            return ieq.Equals(this, other) ? true : false;
         }
 
         public string Title => _up.Title;
@@ -123,36 +131,71 @@ namespace MG.UpdateManagement.Objects
         public UpdateSource UpdateSource => _up.UpdateSource;
 
         public void AcceptLicenseAgreement() => _up.AcceptLicenseAgreement();
-        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup) => _up.Approve(action, targetGroup);
-        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup, DateTime deadline) => _up.Approve(action, targetGroup, deadline);
-        public IUpdateApproval ApproveForOptionalInstall(IComputerTargetGroup targetGroup) => _up.ApproveForOptionalInstall(targetGroup);
+        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup)
+        {
+            var iua = _up.Approve(action, targetGroup);
+            Refresh();
+            return iua;
+        }
+        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup, DateTime deadline)
+        {
+            var iua = _up.Approve(action, targetGroup, deadline);
+            Refresh();
+            return iua;
+        }
+        public IUpdateApproval ApproveForOptionalInstall(IComputerTargetGroup targetGroup)
+        {
+            var iua = _up.ApproveForOptionalInstall(targetGroup);
+            Refresh();
+            return iua;
+        }
         public void CancelDownload() => _up.CancelDownload();
-        public void Decline() => _up.Decline();
-        public void ExpirePackage() => _up.ExpirePackage();
+        public void Decline()
+        {
+            _up.Decline();
+            Refresh();
+        }
+        public void ExpirePackage()
+        {
+            _up.ExpirePackage();
+            Refresh();
+        }
         public void ExportPackageMetadata(string fileName) => _up.ExportPackageMetadata(fileName);
         public RevisionChanges GetChangesFromPreviousRevision() => _up.GetChangesFromPreviousRevision();
         public ReadOnlyCollection<IInstallableItem> GetInstallableItems() => _up.GetInstallableItems();
         public ILicenseAgreement GetLicenseAgreement() => _up.GetLicenseAgreement();
         public UpdateCollection GetRelatedUpdates(UpdateRelationship relationship) => _up.GetRelatedUpdates(relationship);
         public IUpdateSummary GetSummary(ComputerTargetScope computersToInclude) => _up.GetSummary(computersToInclude);
-        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup) => _up.GetSummaryForComputerTargetGroup(targetGroup);
-        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup, bool includeSubgroups) => _up.GetSummaryForComputerTargetGroup(targetGroup, includeSubgroups);
+        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup) => 
+            _up.GetSummaryForComputerTargetGroup(targetGroup);
+        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup, bool includeSubgroups) => 
+            _up.GetSummaryForComputerTargetGroup(targetGroup, includeSubgroups);
         public UpdateSummaryCollection GetSummaryPerComputerTargetGroup() => _up.GetSummaryPerComputerTargetGroup();
-        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup(bool includeSubgroups) => _up.GetSummaryPerComputerTargetGroup(includeSubgroups);
+        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup(bool includeSubgroups) => 
+            _up.GetSummaryPerComputerTargetGroup(includeSubgroups);
         public StringCollection GetSupportedUpdateLanguages() => _up.GetSupportedUpdateLanguages();
         public UpdateApprovalCollection GetUpdateApprovals() => _up.GetUpdateApprovals();
-        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup) => _up.GetUpdateApprovals(targetGroup);
-        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup, UpdateApprovalAction approvalAction, DateTime fromApprovalDate, DateTime toApprovalDate) => _up.GetUpdateApprovals(targetGroup, approvalAction, fromApprovalDate, toApprovalDate);
+        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup) => 
+            _up.GetUpdateApprovals(targetGroup);
+        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup, UpdateApprovalAction approvalAction, DateTime fromApprovalDate, DateTime toApprovalDate) => 
+            _up.GetUpdateApprovals(targetGroup, approvalAction, fromApprovalDate, toApprovalDate);
         public UpdateCategoryCollection GetUpdateCategories() => _up.GetUpdateCategories();
         public IUpdateClassification GetUpdateClassification() => _up.GetUpdateClassification();
-        public UpdateEventCollection GetUpdateEventHistory(DateTime fromDate, DateTime toDate) => _up.GetUpdateEventHistory(fromDate, toDate);
-        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup) => _up.GetUpdateInstallationInfoPerComputerTarget(targetGroup);
-        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup, bool includeSubgroups) => _up.GetUpdateInstallationInfoPerComputerTarget(targetGroup, includeSubgroups);
-        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(ComputerTargetScope computersToInclude) => _up.GetUpdateInstallationInfoPerComputerTarget(computersToInclude);
-        public void PurgeAssociatedReportingEvents(DateTime fromDate, DateTime toDate) => _up.PurgeAssociatedReportingEvents(fromDate, toDate);
+        public UpdateEventCollection GetUpdateEventHistory(DateTime fromDate, DateTime toDate) => 
+            _up.GetUpdateEventHistory(fromDate, toDate);
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup) => 
+            _up.GetUpdateInstallationInfoPerComputerTarget(targetGroup);
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup, bool includeSubgroups) => 
+            _up.GetUpdateInstallationInfoPerComputerTarget(targetGroup, includeSubgroups);
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(ComputerTargetScope computersToInclude) => 
+            _up.GetUpdateInstallationInfoPerComputerTarget(computersToInclude);
+        public void PurgeAssociatedReportingEvents(DateTime fromDate, DateTime toDate) => 
+            _up.PurgeAssociatedReportingEvents(fromDate, toDate);
         public void Refresh() => _up.Refresh();
         public void RefreshUpdateApprovals() => _up.RefreshUpdateApprovals();
         public void ResumeDownload() => _up.ResumeDownload();
+
+        internal Update ShowOriginal() => (Update)_up;
 
         #endregion
 
