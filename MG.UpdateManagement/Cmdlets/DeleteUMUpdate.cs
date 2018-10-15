@@ -9,8 +9,10 @@ namespace MG.UpdateManagement.Cmdlets
     [Cmdlet(VerbsCommon.Remove, "UMUpdate", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
     [CmdletBinding(PositionalBinding = false)]
     [Alias("Delete-UMUpdate", "remup")]
-    public class DeleteUMUpdate : BaseCmdlet
+    public class DeleteUMUpdate : Cmdlet
     {
+        private protected const string stat = "Removing update {0}/{1}...";
+
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "FromPipeline", ValueFromPipeline = true)]
         public UMUpdate Update { get; set; }
 
@@ -22,15 +24,62 @@ namespace MG.UpdateManagement.Cmdlets
             set => _force = value;
         }
 
+        private protected List<Guid> list;
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+            list = new List<Guid>();
+        }
+
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
-            if (_force || (!_force && ShouldContinue("Delete Update '" + Update.ObjectId.ToString() + "' from WSUS server database?", 
+            list.Add(Update.ObjectId);
+        }
+
+        protected override void EndProcessing()
+        {
+            base.EndProcessing();
+            if (_force || (!_force && ShouldContinue("Delete Update '" + Update.ObjectId.ToString() + "' from WSUS server database?",
                 Update.Title)))
             {
-                UMContext.AllUpdates.Delete(Update);
-                //WriteObject(Update.Title + " deleted from database.");
+                for (int i = 1; i <= list.Count; i++)
+                {
+                    UpdateProgress(i);
+                    var id = list[i - 1];
+                    UMContext.AllUpdates.Delete(id);
+                }
+                var pr = new ProgressRecord(1, "Deleting Updates", "Complete")
+                {
+                    RecordType = ProgressRecordType.Completed
+                };
+                WriteProgress(pr);
             }
         }
+
+        private void UpdateProgress(int on)
+        {
+            var progressRecord = new ProgressRecord(1, "Deleting Updates", string.Format(stat, on, list.Count));
+            double num = Math.Round((((double)on / (double)list.Count)*100), 2, MidpointRounding.ToEven);
+            progressRecord.PercentComplete = Convert.ToInt32(num);
+            WriteProgress(progressRecord);
+        }
     }
+
+    //internal class ToDelete
+    //{
+    //    public readonly int Index;
+    //    public readonly Guid Id;
+    //    private protected ToDelete(int index, Guid objId)
+    //    {
+    //        Index = index;
+    //        Id = objId;
+    //    }
+    //    public static explicit operator ToDelete(UMUpdate umup)
+    //    {
+    //        int index = UMContext.AllUpdates[umup.ObjectId];
+    //        return new ToDelete(index, umup.ObjectId);
+    //    }
+    //}
 }

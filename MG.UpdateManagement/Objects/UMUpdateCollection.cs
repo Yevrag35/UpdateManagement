@@ -37,12 +37,34 @@ namespace MG.UpdateManagement.Objects
             get => _list.ElementAt(index);
             set => _list[index] = value;
         }
+        public int this[Guid id]
+        {
+            get
+            {
+                int result = -1;
+                for (int i = 0; i < _list.Count; i++)
+                {
+                    var up = _list[i];
+                    if (up.ObjectId.Equals(id))
+                    {
+                        result = i;
+                        break;
+                    }
+                }
+                return result;
+            }
+        }
 
         #region Special Remove
         internal void Delete(UMUpdate ump)
         {
             ump.ShowOriginal().UpdateServer.DeleteUpdate(ump.Id.UpdateId);
             Remove(ump);
+        }
+        internal void Delete(Guid updateId)
+        {
+            UMContext.Context.DeleteUpdate(updateId);
+            RemoveAt(this[updateId]);
         }
 
         #endregion
