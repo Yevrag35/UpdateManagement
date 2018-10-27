@@ -104,6 +104,7 @@
     <Compile Include="Cmdlets\BaseGetCmdlet.cs" />
     <Compile Include="Cmdlets\DeleteUMUpdate.cs" />
     <Compile Include="Cmdlets\DownloadUMUpdate.cs" />
+    <Compile Include="Cmdlets\StartUMCleanup.cs" />
     <Compile Include="Framework\ByKBArticle.cs" />
     <Compile Include="Cmdlets\ConnectUMServer.cs" />
     <Compile Include="Cmdlets\DeclineUMUpdate.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Objects\KBQuery.cs" />
     <Compile Include="Objects\UMCategories.cs" />
     <Compile Include="Objects\UMClassifications.cs" />
+    <Compile Include="Objects\UMCleanupResults.cs" />
     <Compile Include="Objects\UMComputerGroupCollection.cs" />
     <Compile Include="Objects\UMDownload.cs" />
     <Compile Include="Objects\UMProductInfo.cs" />
