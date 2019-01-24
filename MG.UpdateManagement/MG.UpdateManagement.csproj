@@ -35,7 +35,7 @@
   <ItemGroup>
     <Reference Include="Dynamic.Parameter, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Dynamic.Parameter.dll</HintPath>
+      <HintPath>Assemblies\Dynamic.Parameter.dll</HintPath>
     </Reference>
     <Reference Include="MG.Attributes, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -43,47 +43,47 @@
     </Reference>
     <Reference Include="Microsoft.UpdateServices.AdminDataAccessProxy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.AdminDataAccessProxy.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.AdminDataAccessProxy.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.Administration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.Administration.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.Administration.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.BaseApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.BaseApi.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.BaseApi.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.ClientServicing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.ClientServicing.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.ClientServicing.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.CoreCommon, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.CoreCommon.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.CoreCommon.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.DBlayer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.DBlayer.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.DBlayer.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.StringResources, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.StringResources.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.StringResources.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.StringResources.Resources, Version=4.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.StringResources.Resources.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.StringResources.Resources.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.Utils, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\Microsoft.UpdateServices.Utils.dll</HintPath>
+      <HintPath>Assemblies\Microsoft.UpdateServices.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -92,7 +92,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\System.Management.Automation.dll</HintPath>
+      <HintPath>Assemblies\System.Management.Automation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
