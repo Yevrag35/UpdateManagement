@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MG.UpdateManagement</RootNamespace>
     <AssemblyName>MG.UpdateManagement</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,118 +34,120 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dynamic.Parameter, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Assemblies\Dynamic.Parameter.dll</HintPath>
-    </Reference>
-    <Reference Include="MG.Attributes, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Assemblies\MG.Attributes.dll</HintPath>
+    <Reference Include="MG.Dynamic">
+      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\MG.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.AdminDataAccessProxy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.AdminDataAccessProxy.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.Administration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.Administration.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.BaseApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.BaseApi.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.ClientServicing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.ClientServicing.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.CoreCommon, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.CoreCommon.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.DBlayer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.DBlayer.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.StringResources, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.StringResources.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.StringResources.Resources, Version=4.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.StringResources.Resources.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.Utils, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assemblies\Microsoft.UpdateServices.Utils.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Assemblies\System.Management.Automation.dll</HintPath>
+      <HintPath>..\packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cmdlets\ApproveUMUpdate.cs" />
-    <Compile Include="Cmdlets\BaseCmdlet.cs" />
-    <Compile Include="Cmdlets\BaseGetCmdlet.cs" />
-    <Compile Include="Cmdlets\DeleteUMUpdate.cs" />
-    <Compile Include="Cmdlets\DownloadUMUpdate.cs" />
-    <Compile Include="Cmdlets\StartUMCleanup.cs" />
-    <Compile Include="Framework\ByKBArticle.cs" />
-    <Compile Include="Cmdlets\ConnectUMServer.cs" />
-    <Compile Include="Cmdlets\DeclineUMUpdate.cs" />
-    <Compile Include="Cmdlets\GetUMUpdate.cs" />
-    <Compile Include="Framework\ProductFiltering.cs" />
-    <Compile Include="Enumerations\Architectures.cs" />
-    <Compile Include="Enumerations\Attributes.cs" />
-    <Compile Include="Enumerations\Products.cs" />
-    <Compile Include="Exceptions\UMExceptions.cs" />
-    <Compile Include="Framework\ArchitectureParameter.cs" />
-    <Compile Include="Framework\ProgressBar.cs" />
-    <Compile Include="Framework\UMEquality.cs" />
-    <Compile Include="Framework\UpdateEquality.cs" />
-    <Compile Include="Objects\IUMCollection.cs" />
-    <Compile Include="Objects\IUMObject.cs" />
-    <Compile Include="Framework\UMContext.cs" />
-    <Compile Include="Objects\KBQuery.cs" />
-    <Compile Include="Objects\UMCategories.cs" />
-    <Compile Include="Objects\UMClassifications.cs" />
-    <Compile Include="Objects\UMCleanupResults.cs" />
-    <Compile Include="Objects\UMComputerGroupCollection.cs" />
-    <Compile Include="Objects\UMDownload.cs" />
-    <Compile Include="Objects\UMProductInfo.cs" />
-    <Compile Include="Objects\UMQuery.cs" />
-    <Compile Include="Objects\UMTargetCollection.cs" />
-    <Compile Include="Objects\UMUpdate.cs" />
-    <Compile Include="Objects\UMUpdateCollection.cs" />
+    <None Include="Cmdlets\Updates\ApproveUpdate.cs" />
+    <None Include="Cmdlets\Bases\BaseCmdlet.cs" />
+    <None Include="Cmdlets\Bases\BaseGetCmdlet.cs" />
+    <None Include="Cmdlets\Updates\RemoveUpdate.cs" />
+    <None Include="Cmdlets\Updates\DownloadUpdate.cs" />
+    <None Include="Cmdlets\Server\StartCleanup.cs" />
+    <None Include="Framework\ByKBArticle.cs" />
+    <None Include="Cmdlets\Server\ConnectServer.cs" />
+    <None Include="Cmdlets\Updates\DeclineUpdate.cs" />
+    <None Include="Cmdlets\Updates\GetUpdate.cs" />
+    <None Include="Framework\ProductFiltering.cs" />
+    <None Include="Enumerations\Architectures.cs" />
+    <None Include="Enumerations\Attributes.cs" />
+    <None Include="Enumerations\Products.cs" />
+    <None Include="Exceptions\UMExceptions.cs" />
+    <None Include="Framework\ArchitectureParameter.cs" />
+    <None Include="Framework\ProgressBar.cs" />
+    <None Include="Framework\UMEquality.cs" />
+    <None Include="Framework\UpdateEquality.cs" />
+    <None Include="Objects\IUMCollection.cs" />
+    <None Include="Objects\IUMObject.cs" />
+    <None Include="Framework\UMContext.cs" />
+    <None Include="Objects\KBQuery.cs" />
+    <None Include="Objects\UMCategories.cs" />
+    <None Include="Objects\UMClassifications.cs" />
+    <None Include="Objects\UMCleanupResults.cs" />
+    <None Include="Objects\UMComputerGroupCollection.cs" />
+    <None Include="Objects\UMDownload.cs" />
+    <None Include="Objects\UMProductInfo.cs" />
+    <None Include="Objects\UMQuery.cs" />
+    <None Include="Objects\UMTargetCollection.cs" />
+    <None Include="Objects\UMUpdate.cs" />
+    <None Include="Objects\UMUpdateCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="UpdateManagement.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assemblies\" />
+    <Folder Include="TypeFormats\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Framework\TargetGroupParameter.cs" />
+    <None Include="Framework\TargetGroupParameter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="UpdateManagement\MG.UpdateManagement.Objects.UMUpdate.Format.ps1xml" />
-    <None Include="UpdateManagement\Microsoft.UpdateServices.Administration.IComputerTarget.Format.ps1xml" />
-    <None Include="UpdateManagement\UpdateManagement.ps1" />
-    <None Include="UpdateManagement\UpdateManagement.psd1" />
+    <Content Include="DebugScript.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="GenerateManifest.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -NonInteractive -WindowStyle Hidden -File "$(ProjectDir)GenerateManifest.ps1" -DebugDirectory "$(ProjectDir)bin\$(ConfigurationName)" -ModuleFileDirectory "$(ProjectDir)TypeFormats" -AssemblyInfo "$(ProjectDir)Properties\AssemblyInfo.cs" -TargetFileName "$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
