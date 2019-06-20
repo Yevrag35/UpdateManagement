@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 desktop\.ini
+
+MG\.UpdateManagement/DebugScript\.ps1
