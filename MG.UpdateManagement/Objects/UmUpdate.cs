@@ -364,7 +364,7 @@ namespace MG.UpdateManagement.Objects
         #endregion
 
         #region STATIC METHODS
-        public static 
+        //public static 
         public static UmUpdate GetById(UpdateRevisionId id, UpdateServer us)
         {
             object[] args = new object[1] { us };

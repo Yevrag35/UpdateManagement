@@ -150,6 +150,11 @@ namespace MG.UpdateManagement.Objects
             return result;
         }
 
+        public void Refresh()
+        {
+            new AdminDataAccess()
+        }
+
         #endregion
 
         #region REFLECTION
