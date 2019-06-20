@@ -35,7 +35,6 @@ namespace MG.UpdateManagement.Objects
         private string _updateClassificationTitle;
         private UpdateServer _updateServer;
 
-
         #endregion
 
         #region PROPERTIES
@@ -204,6 +203,33 @@ namespace MG.UpdateManagement.Objects
             this.RequiresLicenseAgreementAcceptance = false;
         }
 
+        public void AddCategoryTitle(GenericReadableRow row)
+        {
+            if (row != null)
+            {
+                string str = row.GetString(1);
+                string str2 = row.GetString(2);
+                try
+                {
+                    if (str == "UpdateClassification")
+                        this.UpdateClassificationTitle = str2;
+
+                    else if (str == "Product")
+                        _productTitles.Add(str2);
+
+                    else if (str == "ProductFamily")
+                        _productFamilyTitles.Add(str2);
+
+                    else if (str == "Company")
+                        _companyTitles.Add(str2);
+                }
+                catch (ArgumentException ex)
+                {
+                    throw new WsusInvalidDataException(ex.Message, ex);
+                }
+            }
+        }
+
         public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup, DateTime deadline, bool isAssigned)
         {
             if (targetGroup == null)
@@ -220,8 +246,200 @@ namespace MG.UpdateManagement.Objects
             var ada = (AdminDataAccess)ClassFactory.CreateInstance(typeof(AdminDataAccess), args);
             GenericReadableRow row = ada.ExecuteSPDeployUpdate1(_id, (int)action, targetGroup.Id, deadline, UpdateServer.GetCurrentUserName(), isAssigned);
 
-            var inst = Activator.CreateInstance(typeof(UpdateApproval), BindingFlags.NonPublic, null, new object[1] { row }, CultureInfo.CurrentCulture);
-            
+            var inst = Activator.CreateInstance(typeof(UpdateApproval), 
+                BindingFlags.NonPublic | BindingFlags.Instance, null, new object[2] { _updateServer, row }, null);
+
+            return (UpdateApproval)inst;
+        }
+
+        public void Decline() => this.Decline(true);
+        public void Decline(bool failIfReplica)
+        {
+            object[] args = new object[1] { _updateServer };
+            var ada = (AdminDataAccess)ClassFactory.CreateInstance(typeof(AdminDataAccess), args);
+            ada.ExecuteSPDeclineUpdate(_id.UpdateId, UpdateServer.GetCurrentUserName(), failIfReplica);
+        }
+
+        public static UmUpdate GetById(UpdateRevisionId id, UpdateServer us)
+        {
+            object[] args = new object[1] { us };
+            var ada = (AdminDataAccess)ClassFactory.CreateInstance(typeof(AdminDataAccess), args);
+            CompleteUpdates comUps = ada.ExecuteSPGetUpdateById("en", id);
+            if (comUps.Count == 0)
+                throw new WsusObjectNotFoundException(LocalizedStrings.NotFoundInDB);
+
+            GenericReadableRow[] minimalProps = comUps.GetMinimalProperties();
+            UmUpdate up = null;
+            try
+            {
+                up = new UmUpdate(us, minimalProps[0]);
+            }
+            catch (ArgumentException exc)
+            {
+                throw new WsusInvalidDataException(LocalizedStrings.InvalidUpdate, exc);
+            }
+            foreach (GenericReadableRow row in comUps.GetLocalizedCategoryTitles())
+            {
+                up.AddCategoryTitle(row);
+            }
+            foreach (GenericReadableRow row2 in comUps.GetKBArticles())
+            {
+                up.KnowledgebaseArticles.Add(row2.GetString(1));
+            }
+            foreach (GenericReadableRow row3 in comUps.GetSecurityBulletins())
+            {
+                up.SecurityBulletins.Add(row3.GetString(1));
+            }
+            foreach (GenericReadableRow row4 in comUps.GetAdditionalInformationUrls())
+            {
+                up._infoUrls.Add(row4.GetString(1));
+            }
+            return up;
+        }
+
+        public void Refresh()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILicenseAgreement GetLicenseAgreement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public RevisionChanges GetChangesFromPreviousRevision()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateCategoryCollection GetUpdateCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateClassification GetUpdateClassification()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateCollection GetRelatedUpdates(UpdateRelationship relationship)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ReadOnlyCollection<IInstallableItem> GetInstallableItems()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup, DateTime deadline)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateApproval ApproveForOptionalInstall(IComputerTargetGroup targetGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateApprovalCollection GetUpdateApprovals()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup, UpdateApprovalAction approvalAction, DateTime fromApprovalDate, DateTime toApprovalDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RefreshUpdateApprovals()
+        {
+            throw new NotImplementedException();
+        }
+
+        public StringCollection GetSupportedUpdateLanguages()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateEventCollection GetUpdateEventHistory(DateTime fromDate, DateTime toDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup(bool includeSubgroups)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup, bool includeSubgroups)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateSummary GetSummary(ComputerTargetScope computersToInclude)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup, bool includeSubgroups)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(ComputerTargetScope computersToInclude)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CancelDownload()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ResumeDownload()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PurgeAssociatedReportingEvents(DateTime fromDate, DateTime toDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExportPackageMetadata(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExpirePackage()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

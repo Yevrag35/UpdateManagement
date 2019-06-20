@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MG.Dynamic">
-      <HintPath>D:\Local_Repos\MG.UpdateManagement\MG.UpdateManagement\Assemblies\MG.Dynamic.dll</HintPath>
+      <HintPath>Assemblies\MG.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.UpdateServices.AdminDataAccessProxy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -129,6 +129,7 @@
     <None Include="Old\OldObjects\UMUpdateCollection.cs" />
     <Compile Include="Backend\UmContext.cs" />
     <Compile Include="Objects\UmUpdate.cs" />
+    <Compile Include="Objects\UmUpdateApproval.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="UpdateManagement.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -150,9 +151,7 @@
     <None Include="Old\Framework\TargetGroupParameter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DebugScript.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="DebugScript.ps1" />
     <None Include="GenerateManifest.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

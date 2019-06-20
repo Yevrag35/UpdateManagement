@@ -17,7 +17,7 @@ namespace MG.UpdateManagement
 
         #region PROPERTIES
         public static IUpdateServer Context { get; private set; }
-        public static bool IsConnected => Context != null && !string.IsNullOrEmpty(Context.Name)
+        public static bool IsConnected => Context != null && !string.IsNullOrEmpty(Context.Name);
 
         #endregion
 
