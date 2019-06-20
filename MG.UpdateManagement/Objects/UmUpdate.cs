@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace MG.UpdateManagement.Objects
 {
-    public class UmUpdate : MarshalByRefObject, IUpdate
+    public class UmUpdate : MarshalByRefObject, IUmObject, IUpdate
     {
         #region FIELDS/CONSTANTS
         private StringCollection _infoUrls;
@@ -33,7 +33,6 @@ namespace MG.UpdateManagement.Objects
         private string _title;
         private InstallationBehavior _uninstallBehavior;
         private string _updateClassificationTitle;
-        private UpdateServer _updateServer;
 
         #endregion
 
@@ -126,7 +125,7 @@ namespace MG.UpdateManagement.Objects
                 _updateClassificationTitle = value;
             }
         }
-        public UpdateServer UpdateServer => _updateServer;
+        public UpdateServer UpdateServer { get; }
         public UpdateSource UpdateSource { get; set; }
         public UpdateType UpdateType { get; set; }
 
@@ -145,7 +144,7 @@ namespace MG.UpdateManagement.Objects
             _productTitles = new StringCollection();
             _productFamilyTitles = new StringCollection();
             _infoUrls = new StringCollection();
-            _updateServer = updateServer;
+            this.UpdateServer = updateServer;
             _id = new UpdateRevisionId();
             _installBehavior = new InstallationBehavior();
             _uninstallBehavior = new InstallationBehavior();
@@ -190,7 +189,7 @@ namespace MG.UpdateManagement.Objects
         #region PUBLIC METHODS
         public void AcceptLicenseAgreement()
         {
-            object[] args = new object[1] { _updateServer };
+            object[] args = new object[1] { this.UpdateServer };
             var access = (AdminDataAccess)ClassFactory.CreateInstance(typeof(AdminDataAccess), args);
             try
             {
@@ -202,34 +201,10 @@ namespace MG.UpdateManagement.Objects
             }
             this.RequiresLicenseAgreementAcceptance = false;
         }
-
-        public void AddCategoryTitle(GenericReadableRow row)
-        {
-            if (row != null)
-            {
-                string str = row.GetString(1);
-                string str2 = row.GetString(2);
-                try
-                {
-                    if (str == "UpdateClassification")
-                        this.UpdateClassificationTitle = str2;
-
-                    else if (str == "Product")
-                        _productTitles.Add(str2);
-
-                    else if (str == "ProductFamily")
-                        _productFamilyTitles.Add(str2);
-
-                    else if (str == "Company")
-                        _companyTitles.Add(str2);
-                }
-                catch (ArgumentException ex)
-                {
-                    throw new WsusInvalidDataException(ex.Message, ex);
-                }
-            }
-        }
-
+        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup) => 
+            this.Approve(action, targetGroup, DateTime.MaxValue, true);
+        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup, DateTime deadline) => 
+            this.Approve(action, targetGroup, deadline, true);
         public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup, DateTime deadline, bool isAssigned)
         {
             if (targetGroup == null)
@@ -242,16 +217,17 @@ namespace MG.UpdateManagement.Objects
                 || ((action == UpdateApprovalAction.Uninstall) && this.UninstallationBehavior.CanRequestUserInput)))
                 throw new InvalidOperationException(LocalizedStrings.ErrorCannotApproveWithDeadline);
 
-            object[] args = new object[1] { _updateServer };
+            object[] args = new object[1] { this.UpdateServer };
             var ada = (AdminDataAccess)ClassFactory.CreateInstance(typeof(AdminDataAccess), args);
             GenericReadableRow row = ada.ExecuteSPDeployUpdate1(_id, (int)action, targetGroup.Id, deadline, UpdateServer.GetCurrentUserName(), isAssigned);
 
-            var inst = Activator.CreateInstance(typeof(UpdateApproval), 
-                BindingFlags.NonPublic | BindingFlags.Instance, null, new object[2] { _updateServer, row }, null);
-
-            return (UpdateApproval)inst;
+            return new UmUpdateApproval(this.UpdateServer, row);
         }
-
+        public IUpdateApproval ApproveForOptionalInstall(IComputerTargetGroup targetGroup) => this.Approve(UpdateApprovalAction.Install, targetGroup, DateTime.MaxValue, false);
+        public void CancelDownload()
+        {
+            
+        }
         public void Decline() => this.Decline(true);
         public void Decline(bool failIfReplica)
         {
@@ -260,6 +236,135 @@ namespace MG.UpdateManagement.Objects
             ada.ExecuteSPDeclineUpdate(_id.UpdateId, UpdateServer.GetCurrentUserName(), failIfReplica);
         }
 
+        public void ExportPackageMetadata(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExpirePackage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ILicenseAgreement GetLicenseAgreement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public RevisionChanges GetChangesFromPreviousRevision()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateCategoryCollection GetUpdateCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateClassification GetUpdateClassification()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ReadOnlyCollection<IInstallableItem> GetInstallableItems()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateCollection GetRelatedUpdates(UpdateRelationship relationship)
+        {
+            throw new NotImplementedException();
+        }
+
+        public StringCollection GetSupportedUpdateLanguages()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup(bool includeSubgroups)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup, bool includeSubgroups)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUpdateSummary GetSummary(ComputerTargetScope computersToInclude)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateApprovalCollection GetUpdateApprovals()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup, UpdateApprovalAction approvalAction, DateTime fromApprovalDate, DateTime toApprovalDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateEventCollection GetUpdateEventHistory(DateTime fromDate, DateTime toDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup, bool includeSubgroups)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(ComputerTargetScope computersToInclude)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PurgeAssociatedReportingEvents(DateTime fromDate, DateTime toDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Refresh()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RefreshUpdateApprovals()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ResumeDownload()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region STATIC METHODS
+        public static 
         public static UmUpdate GetById(UpdateRevisionId id, UpdateServer us)
         {
             object[] args = new object[1] { us };
@@ -297,155 +402,35 @@ namespace MG.UpdateManagement.Objects
             return up;
         }
 
-        public void Refresh()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ILicenseAgreement GetLicenseAgreement()
-        {
-            throw new NotImplementedException();
-        }
-
-        public RevisionChanges GetChangesFromPreviousRevision()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateCategoryCollection GetUpdateCategories()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUpdateClassification GetUpdateClassification()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateCollection GetRelatedUpdates(UpdateRelationship relationship)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ReadOnlyCollection<IInstallableItem> GetInstallableItems()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUpdateApproval Approve(UpdateApprovalAction action, IComputerTargetGroup targetGroup, DateTime deadline)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUpdateApproval ApproveForOptionalInstall(IComputerTargetGroup targetGroup)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateApprovalCollection GetUpdateApprovals()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateApprovalCollection GetUpdateApprovals(IComputerTargetGroup targetGroup, UpdateApprovalAction approvalAction, DateTime fromApprovalDate, DateTime toApprovalDate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RefreshUpdateApprovals()
-        {
-            throw new NotImplementedException();
-        }
-
-        public StringCollection GetSupportedUpdateLanguages()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateEventCollection GetUpdateEventHistory(DateTime fromDate, DateTime toDate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateSummaryCollection GetSummaryPerComputerTargetGroup(bool includeSubgroups)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUpdateSummary GetSummaryForComputerTargetGroup(IComputerTargetGroup targetGroup, bool includeSubgroups)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IUpdateSummary GetSummary(ComputerTargetScope computersToInclude)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(IComputerTargetGroup targetGroup, bool includeSubgroups)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UpdateInstallationInfoCollection GetUpdateInstallationInfoPerComputerTarget(ComputerTargetScope computersToInclude)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CancelDownload()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ResumeDownload()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PurgeAssociatedReportingEvents(DateTime fromDate, DateTime toDate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExportPackageMetadata(string fileName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExpirePackage()
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
-        #region BACKEND/PRIVATE METHODS
+        #region BACKEND METHODS
+        public void AddCategoryTitle(GenericReadableRow row)
+        {
+            if (row != null)
+            {
+                string str = row.GetString(1);
+                string str2 = row.GetString(2);
+                try
+                {
+                    if (str == "UpdateClassification")
+                        this.UpdateClassificationTitle = str2;
 
+                    else if (str == "Product")
+                        _productTitles.Add(str2);
+
+                    else if (str == "ProductFamily")
+                        _productFamilyTitles.Add(str2);
+
+                    else if (str == "Company")
+                        _companyTitles.Add(str2);
+                }
+                catch (ArgumentException ex)
+                {
+                    throw new WsusInvalidDataException(ex.Message, ex);
+                }
+            }
+        }
 
         #endregion
     }

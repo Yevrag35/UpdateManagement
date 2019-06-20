@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace MG.UpdateManagement.Objects
 {
-    public class UmUpdateApproval : MarshalByRefObject, IUpdateApproval
+    public class UmUpdateApproval : MarshalByRefObject, IUmObject, IUpdateApproval
     {
         #region FIELDS/CONSTANTS
         private UpdateApprovalAction _action;
@@ -23,6 +23,7 @@ namespace MG.UpdateManagement.Objects
         #endregion
 
         #region PROPERTIES
+
         public UpdateApprovalAction Action
         {
             get => _action;
@@ -147,6 +148,23 @@ namespace MG.UpdateManagement.Objects
             }
 
             return result;
+        }
+
+        #endregion
+
+        #region REFLECTION
+        private void SetProperties(UmUpdateApproval obj)
+        {
+            IEnumerable<PropertyInfo> allProps = this.GetType().GetProperties(
+                BindingFlags.Public | BindingFlags.Instance).Where(
+                    x => x.CanWrite);
+
+            foreach (PropertyInfo pi in allProps)
+            {
+                object newVal = pi.GetValue(obj);
+                if (newVal != null)
+                    pi.SetValue(this, newVal);
+            }
         }
 
         #endregion

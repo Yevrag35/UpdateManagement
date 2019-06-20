@@ -130,6 +130,8 @@
     <Compile Include="Backend\UmContext.cs" />
     <Compile Include="Objects\UmUpdate.cs" />
     <Compile Include="Objects\UmUpdateApproval.cs" />
+    <Compile Include="Objects\UmUpdateCollection.cs" />
+    <Compile Include="Objects\UmCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="UpdateManagement.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
