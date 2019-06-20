@@ -29,7 +29,7 @@ $allFiles = Get-ChildItem $ModuleFileDirectory -Include * -Exclude *.old -Recurs
 $References = Join-Path "$ModuleFileDirectory\.." "Assemblies";
 
 [string[]]$verbs = Get-Verb | Select-Object -ExpandProperty Verb;
-[string[]]$verbs += @("Decline", "Download");
+[string[]]$verbs += @("Download");
 $patFormat = '^({0})(\S{{1,}})\.cs';
 $pattern = $patFormat -f ($verbs -join '|')
 $cmdletFormat = "{0}-{1}";

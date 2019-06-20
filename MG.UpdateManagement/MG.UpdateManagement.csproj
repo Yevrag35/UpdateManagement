@@ -94,39 +94,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cmdlets\Updates\ApproveUpdate.cs" />
-    <None Include="Cmdlets\Bases\BaseCmdlet.cs" />
-    <None Include="Cmdlets\Bases\BaseGetCmdlet.cs" />
-    <None Include="Cmdlets\Updates\RemoveUpdate.cs" />
-    <None Include="Cmdlets\Updates\DownloadUpdate.cs" />
-    <None Include="Cmdlets\Server\StartCleanup.cs" />
-    <None Include="Framework\ByKBArticle.cs" />
-    <None Include="Cmdlets\Server\ConnectServer.cs" />
-    <None Include="Cmdlets\Updates\DeclineUpdate.cs" />
-    <None Include="Cmdlets\Updates\GetUpdate.cs" />
-    <None Include="Framework\ProductFiltering.cs" />
-    <None Include="Enumerations\Architectures.cs" />
-    <None Include="Enumerations\Attributes.cs" />
-    <None Include="Enumerations\Products.cs" />
-    <None Include="Exceptions\UMExceptions.cs" />
-    <None Include="Framework\ArchitectureParameter.cs" />
-    <None Include="Framework\ProgressBar.cs" />
-    <None Include="Framework\UMEquality.cs" />
-    <None Include="Framework\UpdateEquality.cs" />
-    <None Include="Objects\IUMCollection.cs" />
-    <None Include="Objects\IUMObject.cs" />
-    <None Include="Framework\UMContext.cs" />
-    <None Include="Objects\KBQuery.cs" />
-    <None Include="Objects\UMCategories.cs" />
-    <None Include="Objects\UMClassifications.cs" />
-    <None Include="Objects\UMCleanupResults.cs" />
-    <None Include="Objects\UMComputerGroupCollection.cs" />
-    <None Include="Objects\UMDownload.cs" />
-    <None Include="Objects\UMProductInfo.cs" />
-    <None Include="Objects\UMQuery.cs" />
-    <None Include="Objects\UMTargetCollection.cs" />
-    <None Include="Objects\UMUpdate.cs" />
-    <None Include="Objects\UMUpdateCollection.cs" />
+    <None Include="Old\Cmdlets\Updates\ApproveUpdate.cs" />
+    <None Include="Old\Cmdlets\Bases\BaseCmdlet.cs" />
+    <None Include="Old\Cmdlets\Bases\BaseGetCmdlet.cs" />
+    <None Include="Old\Cmdlets\Updates\RemoveUpdate.cs" />
+    <None Include="Old\Cmdlets\Updates\DownloadUpdate.cs" />
+    <None Include="Old\Cmdlets\Server\StartCleanup.cs" />
+    <None Include="Old\Framework\ByKBArticle.cs" />
+    <None Include="Old\Cmdlets\Server\ConnectServer.cs" />
+    <None Include="Old\Cmdlets\Updates\DeclineUpdate.cs" />
+    <None Include="Old\Cmdlets\Updates\GetUpdate.cs" />
+    <None Include="Old\Framework\ProductFiltering.cs" />
+    <None Include="Old\Enumerations\Architectures.cs" />
+    <None Include="Old\Enumerations\Attributes.cs" />
+    <None Include="Old\Enumerations\Products.cs" />
+    <None Include="Old\Exceptions\UMExceptions.cs" />
+    <None Include="Old\Framework\ArchitectureParameter.cs" />
+    <None Include="Old\Framework\ProgressBar.cs" />
+    <None Include="Old\Framework\UMEquality.cs" />
+    <None Include="Old\Framework\UpdateEquality.cs" />
+    <None Include="Old\Objects\IUMCollection.cs" />
+    <None Include="Old\Objects\IUMObject.cs" />
+    <None Include="Old\Framework\UMContext.cs" />
+    <None Include="Old\Objects\KBQuery.cs" />
+    <None Include="Old\Objects\UMCategories.cs" />
+    <None Include="Old\Objects\UMClassifications.cs" />
+    <None Include="Old\Objects\UMCleanupResults.cs" />
+    <None Include="Old\Objects\UMComputerGroupCollection.cs" />
+    <None Include="Old\Objects\UMDownload.cs" />
+    <None Include="Old\Objects\UMProductInfo.cs" />
+    <None Include="Old\Objects\UMQuery.cs" />
+    <None Include="Old\Objects\UMTargetCollection.cs" />
+    <None Include="Old\Objects\UMUpdate.cs" />
+    <None Include="Old\Objects\UMUpdateCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="UpdateManagement.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -135,10 +135,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assemblies\" />
+    <Folder Include="Cmdlets\Bases\" />
+    <Folder Include="Cmdlets\Categories\" />
+    <Folder Include="Cmdlets\Classifications\" />
+    <Folder Include="Cmdlets\Computers\" />
+    <Folder Include="Cmdlets\Products\" />
+    <Folder Include="Cmdlets\Updates\" />
+    <Folder Include="Cmdlets\WsusServer\" />
     <Folder Include="TypeFormats\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Framework\TargetGroupParameter.cs" />
+    <None Include="Old\Framework\TargetGroupParameter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DebugScript.ps1">
