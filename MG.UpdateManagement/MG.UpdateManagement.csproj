@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>UpdateManagement\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -113,20 +113,22 @@
     <None Include="Old\Framework\ProgressBar.cs" />
     <None Include="Old\Framework\UMEquality.cs" />
     <None Include="Old\Framework\UpdateEquality.cs" />
-    <None Include="Old\Objects\IUMCollection.cs" />
-    <None Include="Old\Objects\IUMObject.cs" />
+    <None Include="Old\OldObjects\IUMCollection.cs" />
+    <None Include="Old\OldObjects\IUMObject.cs" />
     <None Include="Old\Framework\UMContext.cs" />
-    <None Include="Old\Objects\KBQuery.cs" />
-    <None Include="Old\Objects\UMCategories.cs" />
-    <None Include="Old\Objects\UMClassifications.cs" />
-    <None Include="Old\Objects\UMCleanupResults.cs" />
-    <None Include="Old\Objects\UMComputerGroupCollection.cs" />
-    <None Include="Old\Objects\UMDownload.cs" />
-    <None Include="Old\Objects\UMProductInfo.cs" />
-    <None Include="Old\Objects\UMQuery.cs" />
-    <None Include="Old\Objects\UMTargetCollection.cs" />
-    <None Include="Old\Objects\UMUpdate.cs" />
-    <None Include="Old\Objects\UMUpdateCollection.cs" />
+    <None Include="Old\OldObjects\KBQuery.cs" />
+    <None Include="Old\OldObjects\UMCategories.cs" />
+    <None Include="Old\OldObjects\UMClassifications.cs" />
+    <None Include="Old\OldObjects\UMCleanupResults.cs" />
+    <None Include="Old\OldObjects\UMComputerGroupCollection.cs" />
+    <None Include="Old\OldObjects\UMDownload.cs" />
+    <None Include="Old\OldObjects\UMProductInfo.cs" />
+    <None Include="Old\OldObjects\UMQuery.cs" />
+    <None Include="Old\OldObjects\UMTargetCollection.cs" />
+    <None Include="Old\OldObjects\UMUpdate.cs" />
+    <None Include="Old\OldObjects\UMUpdateCollection.cs" />
+    <Compile Include="Backend\UmContext.cs" />
+    <Compile Include="Objects\UmUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="UpdateManagement.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
